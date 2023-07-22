@@ -1,0 +1,3 @@
+[submodule "path_to_submodule"] 
+  path = /bookmyevent-client 
+  url = git://github.com/BookMyEvent/client-bookmyevent.git

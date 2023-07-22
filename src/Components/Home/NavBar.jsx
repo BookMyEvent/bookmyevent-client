@@ -41,8 +41,7 @@ export default function NavBar() {
             setLoading(false)
         }
         getData();
-
-    })
+    },[])
 
     if (loading === true) {
         return (

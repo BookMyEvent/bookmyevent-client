@@ -1,0 +1,283 @@
+.form-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    background-color: #343444;
+    font-family: 'Open sans';
+}
+
+.form {
+    width: 80%;
+    height: 90%;
+    position: relative;
+    left: 10%;
+    top: 5%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.card-form-img {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-logo{
+    width: 100%;
+    height: 70%;
+}
+
+.form-body {
+    width: 70%;
+    position: absolute;
+    left: 30%;
+    background-color: white;
+    overflow-y: scroll;
+}
+
+.inputs {
+    width: 60%;
+    height: 100%;
+}
+
+.session {
+    width: 80%;
+    height: auto;
+    min-height: 8%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    left: 8%;
+    color: black;
+    margin: 1%;
+}
+
+.group,.time-group,.other-event-group {
+    width: 90%;
+    height: 8%;
+    position: relative;
+    left: 4%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1%;
+}
+
+.group > *{
+    display: flex;
+    align-items: center;
+}
+
+.time-group{
+    height: 16%;
+}
+
+.time-group-input,.group-input,.label-group-input {
+    width: 45%;
+    height: 100%;
+    justify-content: center;
+}
+
+.time-group-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.label-group-input{
+    width: fit-content  ;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: larger;
+    font-family: 'Open sans';
+    font-weight: 900;
+    border: 0;
+}
+
+.desc-input {
+    width: 90%;
+    height: 20%;
+    position: relative;
+    left: 4%;
+    margin: 1%;
+}
+
+.info {
+    width: 90%;
+    height: 10%;
+    margin: 1%;
+    position: relative;
+    left: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.submit-btn {
+    width: 90%;
+    height: 8%;
+    position: relative;
+    left: 4%;
+    margin: 1%;
+    background-color: #14141f;
+    color: white;
+    border-radius: 10px;
+}
+
+.checkbox-item {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 50px;
+    font-size: 110%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    padding: 1%;
+}
+
+.checkbox-btn {
+    width: 10%;
+    height: 20px;
+    margin: 0;
+    border: 0;
+    font-size: 200%;
+}
+
+.checkbox-name{
+    padding-left: 2%;
+}
+
+
+.target {
+    width: 95%;
+    height: auto;
+    position: relative;
+    font-family: 'Open sans';
+    font-weight: 900;
+    left: 5%;
+}
+
+.form-body::-webkit-scrollbar{
+    width: 10px;
+    border-radius: 0;
+}
+
+.form-body::-webkit-scrollbar-track {
+    background: white;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background-color: #14141f;
+    border-radius: 3px;
+}
+
+.form::-webkit-scrollbar{
+    display: none;
+}
+
+@media (max-width:769px) {
+
+    .form {
+        width: 100%;
+        height: 85%;
+        left:0%;
+        top: 10%;
+        overflow-y: scroll;
+        background-color: white;
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .card-form-img{
+        width: 100%;
+        height: 40%;
+    }
+    .form-logo{
+        width: auto;
+        height: 100%;
+    }
+    .form-body{
+        width: 100%;
+        height: 60%;
+        left: 0;
+        top: 40%;
+        overflow-y: initial;
+        overflow-x: initial;
+    }
+
+    .session > *{
+        margin-bottom: 5%;
+    }
+
+    .alert {
+        margin-bottom: 4%;
+    }
+
+    .form-body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .inputs{
+        width: 100%;
+        height: 50%;
+    }
+
+    .session {
+        min-height: 15%;
+        flex-direction: column;
+    }
+
+    .group {
+        flex-direction: column;
+        height: 36%;
+        align-items: start;
+    }
+
+    .other-event-group{
+        height: 15%;
+        margin-bottom: 4%;
+    }
+
+    .group-input {
+        width: 100%;
+        height: 50%;
+        margin-bottom: 4%;
+    }
+    .time-group{
+        height: 72%;
+        flex-direction: column;
+    }
+    .time-group-input{
+        width: 100%;
+        height: 50%;
+        margin-bottom: 4%;
+    }
+    .label-group-input{
+        height: 50%;
+        justify-content: start;
+    }
+
+    .desc-input{
+        height: 30%;
+        margin-bottom: 4%;
+    }
+
+    .submit-btn{
+        height: 12%;
+    }
+
+    .info{
+        height: 15%;
+    }
+
+    .time-group-input > *{
+        height: 50%;
+    }
+}

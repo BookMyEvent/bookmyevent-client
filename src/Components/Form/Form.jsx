@@ -59,7 +59,7 @@ export default function Form() {
             const programs = await result.json();
             let lst = programs.blocked;
             console.log(lst);
-            let temp = lst.map((item)=>(item[1]))
+            let temp = lst.map((item) => (item[1]))
             console.log(temp);
             setBlock(temp);
 
@@ -79,10 +79,6 @@ export default function Form() {
 
     function checkDate(evt) {
         if (evt.target.type === "date") {
-            /* if(new Date(evt.target.value).getTime() <= new Date().getTime()){
-                generateDangerAlert("Date should start from today");
-                return;
-            } */
             setDate(evt.target.value);
             fetchBlockDates(evt.target.value, session);
         }
@@ -293,10 +289,15 @@ export default function Form() {
 
     function handleImage(evt) {
         let temp = evt.target.files[0];
-        const file = new FileReader();
-        file.readAsDataURL(temp);
-        file.onload = () => {
-            setImage(file.result)
+        if (temp.type.includes("image/")) {
+            const file = new FileReader();
+            file.readAsDataURL(temp);
+            file.onload = () => {
+                setImage(file.result)
+            }
+        }
+        else{
+            generateDangerAlert("Please upload only an image")
         }
     }
 
@@ -334,22 +335,24 @@ export default function Form() {
     }
     return (
         <div className='form-container'>
-            <Link to="/" style={{textDecoration:"none",position:"fixed",top:"1%",left:"1%"}}>
-                <span class="material-symbols-outlined" style={{ width: "fit-content",
-                height:"auto", 
-                display: "flex", justifyContent: "center", alignItems: "center",
-                textDecoration:"none",
-                borderRadius:"50%",
-                border:"1px solid white",
-                padding:"1%",
-                fontSize:"xx-large",
-                color:"white"}}>
+            <Link to="/" style={{ width: "fit-content", height: "auto", textDecoration: "none", position: "fixed", top: "1%", left: "1%" }}>
+                <span class="material-symbols-outlined" style={{
+                    width: "fit-content",
+                    height: "auto",
+                    display: "flex", justifyContent: "center", alignItems: "center",
+                    textDecoration: "none",
+                    borderRadius: "50%",
+                    border: "1px solid white",
+                    padding: "50%",
+                    fontSize: "xx-large",
+                    color: "white"
+                }}>
                     arrow_back
                 </span>
             </Link>
             <div className="card form">
                 <div className="card-form-img">
-                    <img src={bme} className='form-logo'/>
+                    <img src={bme} className='form-logo' />
                 </div>
                 <div className="form-body" >
                     {/* Alert */}
@@ -359,7 +362,7 @@ export default function Form() {
 
                     {/* Date */}
                     <div className="group">
-                        <label className='label-group-input' style={{  paddingRight: "5%", paddingLeft: "5%", justifyContent: "center" }}>Date*</label>
+                        <label className='label-group-input' style={{ paddingRight: "5%", paddingLeft: "5%", justifyContent: "center" }}>Date*</label>
                         <input className='form-control inputs' type="date" min={new Date().toISOString().slice(0, 10)} onChange={checkDate} placeholder='dd-mm-yyy' required style={{ width: "100%" }} />
                     </div>
 
@@ -390,7 +393,7 @@ export default function Form() {
                         <select className='form-select group-input' value={venue} onChange={(evt) => { setVenue(evt.target.value); }} disabled={disable} required>
                             {
                                 venues.map((item, index) => {
-                                    return (    
+                                    return (
                                         <option value={item} key={index} disabled={block.includes(item) ? true : false}>{item}</option>
                                     )
                                 })

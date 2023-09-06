@@ -68,14 +68,14 @@ export default function Login() {
 
     return (
         <div className="login">
-            <Link to="/" style={{textDecoration:"none",position:"fixed",top:"1%",left:"1%"}}>
+            <Link to="/" style={{width:"fit-content",height:"auto",textDecoration:"none",position:"fixed",top:"1%",left:"1%"}}>
                 <span class="material-symbols-outlined" style={{ width: "fit-content",
                 height:"auto", 
                 display: "flex", justifyContent: "center", alignItems: "center",
                 textDecoration:"none",
                 borderRadius:"50%",
                 border:"1px solid white",
-                padding:"1%",
+                padding:"50%",
                 fontSize:"xx-large",
                 color:"white"}}>
                     arrow_back

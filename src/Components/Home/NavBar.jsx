@@ -207,7 +207,11 @@ export default function NavBar() {
             </div>
 
             <div className="outer-nav-contents">
-                <h1 className='outer-nav-title' data-aos="fade-right">Discover SVCE Events</h1>
+                <p className='outer-nav-title' data-aos="fade-right">
+                    Discover 
+                    SVCE 
+                    Events
+                </p>
                 <div className="event-count">
                     <div className="event-count-section">
                         <h1 className='event-count-title' data-aos="fade-down">Total Events</h1>

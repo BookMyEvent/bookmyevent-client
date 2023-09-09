@@ -75,7 +75,7 @@ export default function Login() {
                 textDecoration:"none",
                 borderRadius:"50%",
                 border:"1px solid white",
-                padding:"50%",
+                padding:"30%",
                 fontSize:"xx-large",
                 color:"white"}}>
                     arrow_back

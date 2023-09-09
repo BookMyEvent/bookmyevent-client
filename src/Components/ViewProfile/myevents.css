@@ -117,6 +117,9 @@
     height: 100%;
 }
 
+.no-event{
+    color: white;
+}
 
 
 @media (max-width:768px) {

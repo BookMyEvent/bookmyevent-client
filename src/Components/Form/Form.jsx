@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import bme from "../../Assets/bookmyevent.png";
+import { storage } from '../../auth/firebase';
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import './form.css';
 
@@ -40,6 +42,7 @@ export default function Form() {
         'VIDEO HALL',
         'LIBRARY SEMINAR HALL',
         'BIO TECH SEMINAR HALL',
+        'CONFERENCE HALL',
         'OTHERS**'
     ];
     const sessions = ['FN', 'AN', 'Full Day']
@@ -86,6 +89,7 @@ export default function Form() {
             setSession(evt.target.value);
             fetchBlockDates(date, evt.target.value);
         }
+        setVenue('CHOOSE A VENUE---')
     }
 
     function generateDangerAlert(info) {
@@ -108,6 +112,13 @@ export default function Form() {
         }
 
         switch (venue) {
+
+            case 'CONFERENCE HALL':
+                if (audience > 25) {
+                    generateDangerAlert("Maximum Allowed Occupancy - 25");
+                    return;
+                }
+                break;
 
             case "BIO TECH SEMINAR HALL": // Upto 80
                 if (audience > 80) {
@@ -195,7 +206,7 @@ export default function Form() {
             return;
         }
         if (image === "") {
-            generateDangerAlert("Uplaod the Event Image");
+            generateDangerAlert("Upload the Event Image");
             return;
         }
         if (desc.trim() === "") {
@@ -257,6 +268,9 @@ export default function Form() {
         let temp = new Date(date);
         let start = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate(), startTime.slice(0, 2), startTime.slice(3, 5));
         let end = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate(), endTime.slice(0, 2), endTime.slice(3, 5));
+
+        const img = await handleImage();
+        console.log(img);
         setLoading(true);
         const res = await fetch("https://bookmyeventserver.vercel.app/api/addEvent", {
             method: 'POST',
@@ -273,9 +287,10 @@ export default function Form() {
                 link,
                 club: user.type != "HOD" && user.name,
                 dept: user.type != "General Club" && user.dept,
-                image,
+                image:img,
                 allowed,
-                venueName: venue === "OTHERS**" && venueName
+                venueName: venue === "OTHERS**" && venueName,
+                email: user.email
             })
         })
         const { status } = await res.json();
@@ -285,20 +300,15 @@ export default function Form() {
             setLoading(false);
             generateDangerAlert(status);
         }
+
     }
 
-    function handleImage(evt) {
-        let temp = evt.target.files[0];
-        if (temp.type.includes("image/")) {
-            const file = new FileReader();
-            file.readAsDataURL(temp);
-            file.onload = () => {
-                setImage(file.result)
-            }
-        }
-        else{
-            generateDangerAlert("Please upload only an image")
-        }
+    async function handleImage() {
+        const storageRef = ref(storage, `posters/${event}_${user.dept}_${date.toString()}`);
+        await uploadBytes(storageRef, image);
+        const res = await getDownloadURL(ref(storage, `posters/${event}_${user.dept}_${date.toString()}`))
+        console.log(res);
+        return res;
     }
 
     async function fetchDept() {
@@ -343,7 +353,7 @@ export default function Form() {
                     textDecoration: "none",
                     borderRadius: "50%",
                     border: "1px solid white",
-                    padding: "50%",
+                    padding: "30%",
                     fontSize: "xx-large",
                     color: "white"
                 }}>
@@ -410,7 +420,7 @@ export default function Form() {
 
                     <div className='group'>
                         <input className='form-control group-input' placeholder='Name of the Event*' disabled={disable} onChange={(evt) => { setEvent(evt.target.value) }} required />
-                        <input className='form-control group-input' type="file" disabled={disable} onChange={(evt) => { handleImage(evt); }} />
+                        <input className='form-control group-input' placeholder='Event poster' type="file" disabled={disable} onChange={(evt) => { setImage(evt.target.files[0]); }} />
                     </div>
                     <textarea className='form-control desc-input' placeholder='Description*' disabled={disable} onChange={(evt) => { setDesc(evt.target.value) }} required />
                     <input className='form-control other-event-group' placeholder='Registration Link' disabled={disable} onChange={(evt) => { setLink(evt.target.value) }} />

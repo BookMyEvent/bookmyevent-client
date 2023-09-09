@@ -121,8 +121,13 @@ export default function Events() {
     }
 
     async function fetchEvents() {
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/getEvents");
+        const res = await fetch("https://bookmyeventserver.vercel.app/api/getEvents", {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
         const events = await res.json();
+
         events.sort((a, b) => {
             let a1 = new Date(a.startTime);
             let b1 = new Date(b.startTime);

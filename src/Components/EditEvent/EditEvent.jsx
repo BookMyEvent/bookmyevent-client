@@ -4,6 +4,8 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../Form/form.css'
 import Loading from '../Loading/Loading';
 import bme from "../../Assets/bookmyevent.png";
+import { storage } from '../../auth/firebase';
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 
 function EditEvent() {
@@ -20,6 +22,7 @@ function EditEvent() {
     const [block, setBlock] = useState([]);
     const [audienceType, setAudienceType] = useState({});
     const [disable, setDisable] = useState(true);
+    const [image, setImage] = useState("");
     const formBody = useRef();
 
     const venues = [
@@ -29,6 +32,7 @@ function EditEvent() {
         'VIDEO HALL',
         'LIBRARY SEMINAR HALL',
         'BIO TECH SEMINAR HALL',
+        'CONFERENCE HALL',
         'OTHERS**'
     ];
     const sessions = ['FN', 'AN', 'Full Day']
@@ -154,6 +158,13 @@ function EditEvent() {
         }
         switch (event.venue) {
 
+            case 'CONFERENCE HALL':
+                if (event.audience > 25) {
+                    generateDangerAlert("Maximum Allowed Occupancy - 25");
+                    return;
+                }
+                break;
+
             case "BIO TECH SEMINAR HALL": // Upto 80
                 if (event.audience > 80) {
                     generateDangerAlert("Maximum Allowed Occupancy - 80");
@@ -270,7 +281,7 @@ function EditEvent() {
             return;
         }
         if (event.image === "") {
-            generateDangerAlert("Uplaod the Event Image");
+            generateDangerAlert("Upload the Event Image");
             return;
         }
         if (event.description.trim() === "") {
@@ -295,6 +306,11 @@ function EditEvent() {
             return;
         }
 
+        if (image != "") {
+            const img = await handleImage();
+            event.image = img;
+        }
+
         const res = await fetch("https://bookmyeventserver.vercel.app/api/updateEvent", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -307,14 +323,12 @@ function EditEvent() {
             generateDangerAlert(status);
     }
 
-    function handleImage(evt) {
-        let temp = evt.target.files[0];
-        const file = new FileReader();
-        file.readAsDataURL(temp);
-        file.onload = () => {
-            // setImage(file.result)
-            setEvent({ ...event, image:file.result });
-        }
+    async function handleImage() {
+        const storageRef = ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`);
+        await uploadBytes(storageRef, image);
+        const res = await getDownloadURL(ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`))
+        console.log(res);
+        return res;
     }
 
 
@@ -342,7 +356,7 @@ function EditEvent() {
     }
     return (
         <div className='form-container'>
-            <Link to="/" style={{width:"fit-content",height:"auto" , textDecoration: "none", position: "fixed", top: "1%", left: "1%" }}>
+            <Link to="/" style={{ width: "fit-content", height: "auto", textDecoration: "none", position: "fixed", top: "1%", left: "1%" }}>
                 <span class="material-symbols-outlined" style={{
                     width: "fit-content",
                     height: "auto",
@@ -350,7 +364,7 @@ function EditEvent() {
                     textDecoration: "none",
                     borderRadius: "50%",
                     border: "1px solid white",
-                    padding: "50%",
+                    padding: "30%",
                     fontSize: "xx-large",
                     color: "white"
                 }}>
@@ -359,7 +373,7 @@ function EditEvent() {
             </Link>
             <div className="card form">
                 <div className="card-form-img">
-                    <img src={bme} className='form-logo'/>
+                    <img src={bme} className='form-logo' />
                 </div>
                 <div className="form-body">
                     <div className={`alert alert-${alert.type} info`} ref={formBody}>
@@ -400,7 +414,7 @@ function EditEvent() {
                             if (evt.target.value != "OTHERS**")
                                 setEvent({ ...event, venue: evt.target.value, venueName: "" });
                             else
-                                setEvent({ ...event, venue: evt.target.value, venueName:"" });
+                                setEvent({ ...event, venue: evt.target.value, venueName: "" });
 
                         }} required>
                             {
@@ -423,14 +437,14 @@ function EditEvent() {
                     {/* Name of the event */}
                     <div className='group'>
                         <input className='form-control group-input' placeholder='Name of the Event' value={event.event} onChange={(evt) => { setEvent({ ...event, event: evt.target.value }) }} required />
-                        <input className='form-control group-input' type="file" onChange={(evt) => { handleImage(evt); }} />
+                        <input className='form-control group-input' type="file" onChange={(evt) => { setImage(evt.target.files[0]) }} />
                     </div>
 
                     {/* Description */}
                     <textarea className='form-control desc-input' placeholder='Description' value={event.description} onChange={(evt) => { setEvent({ ...event, description: evt.target.value }) }} required />
 
                     {/* Registration link */}
-                    <input className='form-control other-event-group' placeholder='Registration Link' value={event.link} disabled={disable} onChange={(evt) => { setEvent({ ...event, link: evt.target.value }) }}/>
+                    <input className='form-control other-event-group' placeholder='Registration Link' value={event.link} disabled={disable} onChange={(evt) => { setEvent({ ...event, link: evt.target.value }) }} />
 
                     {/* Target Audience */}
                     <h5 className='target'>TARGET AUDIENCE</h5>
@@ -480,10 +494,10 @@ function EditEvent() {
                         </div>
                     </div>
 
-                    <div className="group" style={{height:"auto",padding:"5%"}}>
+                    <div className="group" style={{ height: "auto", padding: "5%" }}>
                         <h6>** - Represents the availablity of venue is not guarantee.</h6>
                     </div>
-                    
+
                     {/* Submit Button */}
                     <button className='btn btn-primary submit-btn' onClick={validateData}>UPDATE</button>
                 </div>

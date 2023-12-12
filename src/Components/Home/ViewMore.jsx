@@ -47,23 +47,16 @@ export default function ViewMore() {
                         <label className="event-details" data-aos="fade-left">{new Date(event.startTime).toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })} - {new Date(event.endTime).toLocaleString(undefined, { hour: '2-digit', minute: '2-digit' })}</label>
                         <h2 className="event-details-title" data-aos="fade-right">Venue</h2>
                         <label className="event-details" data-aos="fade-left">{event.venue != "OTHERS**" ? event.venue : event.venueName}</label>
-                        {
-                            user.type === "Admin" &&
-                                <>
-                                    <h2 className="event-details-title" data-aos="fade-right">Organized By</h2>
-                                    <label className="event-details" data-aos="fade-left">{event.department}</label>
-                                </>
                         
-                        }
                         {
-                            (user.type!="Admin" && event.club != "false") &&
+                            (event.club != "false") &&
                             <>
-                                <h2 className="event-details-title" data-aos="fade-right">Organized By</h2>
+                                <h2 className="event-details-title" data-aos="fade-right">Organized by</h2>
                                 <label className="event-details" data-aos="fade-left">{event.club}</label>
                             </>
                         }
                         {
-                            (user.type!="Admin" && event.department != "false") &&
+                            (event.department != "false") &&
                             <>
                                 <h2 className="event-details-title" data-aos="fade-right">Department</h2>
                                 <label className="event-details" data-aos="fade-left">{event.department}</label>

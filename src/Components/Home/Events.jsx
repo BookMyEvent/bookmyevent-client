@@ -14,7 +14,6 @@ export default function Events() {
     const [sortDept, setSortDept] = useState({});
     const [sortDeptLive, setSortDeptLive] = useState({});
 
-    console.log(sortDept);
 
     async function sortEvents(events, option, name) {
 

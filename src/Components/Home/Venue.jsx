@@ -259,9 +259,9 @@ function Venue() {
       {/* Conference Hall */}
       <div className="card card-venue">
         <div className='venue-content'>
-          <h4 className='venue-title'>CONFERENCE HALL</h4>
+          <h4 className='venue-title'>LIBRARY CONFERENCE HALL</h4>
           <p className='venue-desc'>
-            A Conference Hall is typically a dedicated space within the library that serves as a venue for conducting seminars, workshops, presentations, and other academic activities. It provides a suitable environment for intellectual discussions, knowledge sharing, and interactive sessions.
+            A Library Conference Hall is typically a dedicated space within the library that serves as a venue for conducting seminars, workshops, presentations, and other academic activities. It provides a suitable environment for intellectual discussions, knowledge sharing, and interactive sessions.
             The seating arrangements are designed to ensure the comfort of the participants during seminars and other events.
             Adequate lighting and acoustics are important considerations to create a conducive environment for learning and engagement.
           </p>

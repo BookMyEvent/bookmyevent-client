@@ -11,7 +11,7 @@ function Container({ children }) {
     const dispatch = useDispatch();
 
     async function getUserDetails(uid) {
-        const user = await fetch("https://bookmyevent-server.onrender.com/api/findUser", {
+        const user = await fetch("https://bookmyeventserver.vercel.app/api/findUser", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ uid: uid })

@@ -32,11 +32,11 @@ function EditEvent() {
         'VIDEO HALL',
         'LIBRARY SEMINAR HALL',
         'BIO TECH SEMINAR HALL',
-        'CONFERENCE HALL',
+        'LIBRARY CONFERENCE HALL',
         'OTHERS**'
     ];
-    const sessions = ['FN', 'AN', 'Full Day']
-    const tsessions = ['9:00 AM-12:00 PM', '01:00 PM-04:00 PM', 'Full Day']
+    const sessions = ['FN', 'AN', 'EVNG', 'Full Day']
+    const tsessions = ['9:00 AM-12:00 PM', '01:00 PM-04:00 PM', '04:00 PM-08:00 PM','Full Day']
 
     async function fetchEvents() {
         const res = await fetch("https://bookmyeventserver.vercel.app/api/retrieveEvent", {
@@ -76,7 +76,7 @@ function EditEvent() {
             let lst2 = lst1.map((item) => (item[1]))
             setBlock(lst2);
 
-            if (lst2.length === 5) {
+            if (lst2.length === 6) {
                 selectRef.current.disabled = "true";
                 setAlert({
                     type: "warning",
@@ -109,7 +109,6 @@ function EditEvent() {
             }
             return 0;
         })
-        console.log(event.target);
         for (let i of dept) {
             if (event.target.includes(i))
                 temp[i] = true;
@@ -158,7 +157,7 @@ function EditEvent() {
         }
         switch (event.venue) {
 
-            case 'CONFERENCE HALL':
+            case 'LIBRARY CONFERENCE HALL':
                 if (event.audience > 25) {
                     generateDangerAlert("Maximum Allowed Occupancy - 25");
                     return;
@@ -265,6 +264,12 @@ function EditEvent() {
                     return;
                 }
                 break;
+            case 'EVNG':
+                if (Number(startTime.split(":")[0]) < 16) {
+                    generateDangerAlert("Program should start from atleast 4:00 PM");
+                    return;
+                }
+                break;
         }
         if (Number(new Date(event.startTime).getHours()) > Number(new Date(event.endTime).getHours())) {
             generateDangerAlert("Invalid Program Timings");
@@ -306,8 +311,12 @@ function EditEvent() {
             return;
         }
 
-        if (image != "") {
+        if (image != "" && image != undefined) {
             const img = await handleImage();
+            if(img === "false"){
+                generateDangerAlert("Upload an Image Format file only");
+                return;
+            }
             event.image = img;
         }
 
@@ -324,11 +333,16 @@ function EditEvent() {
     }
 
     async function handleImage() {
-        const storageRef = ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`);
-        await uploadBytes(storageRef, image);
-        const res = await getDownloadURL(ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`))
-        console.log(res);
-        return res;
+        if (image.type.includes("image/")) {
+            const storageRef = ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`);
+            await uploadBytes(storageRef, image);
+            const res = await getDownloadURL(ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`))
+            return res;
+        }
+        else{
+            generateDangerAlert('Upload an image format file only');
+            return "false";
+        }
     }
 
 

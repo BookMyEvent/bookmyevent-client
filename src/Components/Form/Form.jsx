@@ -42,11 +42,11 @@ export default function Form() {
         'VIDEO HALL',
         'LIBRARY SEMINAR HALL',
         'BIO TECH SEMINAR HALL',
-        'CONFERENCE HALL',
+        'LIBRARY CONFERENCE HALL',
         'OTHERS**'
     ];
-    const sessions = ['FN', 'AN', 'Full Day']
-    const tsessions = ['9:00 AM-12:00 PM', '01:00 PM-04:00 PM', 'Full Day']
+    const sessions = ['FN', 'AN', 'EVNG', 'Full Day']
+    const tsessions = ['9:00 AM-12:00 PM', '01:00 PM-04:00 PM','04:00 PM-08:00 PM', 'Full Day']
 
     async function fetchBlockDates(det1, det2) {
         if (det2 != "" && det1 != "") {
@@ -61,12 +61,10 @@ export default function Form() {
             })
             const programs = await result.json();
             let lst = programs.blocked;
-            console.log(lst);
             let temp = lst.map((item) => (item[1]))
-            console.log(temp);
             setBlock(temp);
 
-            if (lst.length === 5) {
+            if (lst.length === 6) {
                 setAlert({
                     type: "warning",
                     info: "Oops! All venues are full.You can use either your Department or others"
@@ -113,7 +111,7 @@ export default function Form() {
 
         switch (venue) {
 
-            case 'CONFERENCE HALL':
+            case 'LIBRARY CONFERENCE HALL':
                 if (audience > 25) {
                     generateDangerAlert("Maximum Allowed Occupancy - 25");
                     return;
@@ -196,8 +194,10 @@ export default function Form() {
                 break;
 
             case "OTHERS**":
-                if (venueName.trim().length === "")
+                if (venueName.trim() === ""){
                     generateDangerAlert("Enter the Venue");
+                    return;
+                }
                 break;
         }
 
@@ -239,6 +239,14 @@ export default function Form() {
                     return;
                 }
                 break;
+            
+            case 'EVNG':
+                if (Number(startTime.split(":")[0]) < 16) {
+                    generateDangerAlert("Program should start from atleast 4:00 PM");
+                    return;
+                }
+                break;
+
         }
         if (Number(startTime.split(":")[0]) > Number(endTime.split(":")[0])) {
             generateDangerAlert("Invalid Program Timings");
@@ -270,45 +278,57 @@ export default function Form() {
         let end = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate(), endTime.slice(0, 2), endTime.slice(3, 5));
 
         const img = await handleImage();
-        console.log(img);
-        setLoading(true);
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/addEvent", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                date,
-                audience,
-                venue,
-                event,
-                description: desc,
-                start,
-                end,
-                session,
-                link,
-                club: user.type != "HOD" && user.name,
-                dept: user.type != "General Club" && user.dept,
-                image:img,
-                allowed,
-                venueName: venue === "OTHERS**" && venueName,
-                email: user.email
-            })
-        })
-        const { status } = await res.json();
-        if (status === "Success")
-            navigate("/");
-        else {
-            setLoading(false);
-            generateDangerAlert(status);
-        }
 
+        if (img != "false") {
+            setLoading(true);
+            const res = await fetch("https://bookmyeventserver.vercel.app/api/addEvent", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    date,
+                    audience,
+                    venue,
+                    event,
+                    description: desc,
+                    start,
+                    end,
+                    session,
+                    link,
+                    club: user.type != "HOD" && user.name,
+                    dept: user.type != "General Club" && user.dept,
+                    image: img,
+                    allowed,
+                    venueName: venue === "OTHERS**" && venueName,
+                    email: user.email
+                })
+            })
+            const { status } = await res.json();
+            if (status === "Success")
+                navigate("/");
+            else {
+                setLoading(false);
+                generateDangerAlert(status);
+            }
+        }
     }
 
     async function handleImage() {
-        const storageRef = ref(storage, `posters/${event}_${user.dept}_${date.toString()}`);
-        await uploadBytes(storageRef, image);
-        const res = await getDownloadURL(ref(storage, `posters/${event}_${user.dept}_${date.toString()}`))
-        console.log(res);
-        return res;
+        if (image != undefined) {
+            if (image.type.includes('image/')) {
+                const storageRef = ref(storage, `posters/${event}_${user.dept}_${date.toString()}`);
+                await uploadBytes(storageRef, image);
+                const res = await getDownloadURL(ref(storage, `posters/${event}_${user.dept}_${date.toString()}`))
+                return res;
+            }
+            else {
+                generateDangerAlert('Upload an image format file only');
+                return "false";
+            }
+        }
+        else {
+            generateDangerAlert('Upload an image format file only');
+            return "false";
+        }
     }
 
     async function fetchDept() {
@@ -386,7 +406,7 @@ export default function Form() {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                        <input className='form-check-input' type="radio" value={item} key={index} name="Session" />
+                                        <input className='form-check-input border-dark' type="radio" value={item} key={index} name="Session" />
                                         <label className='form-check-label d-flex justify-content-center align-items-center' style={{
                                             height: "10%",
                                         }}>{tsessions[index]}</label>
@@ -461,8 +481,15 @@ export default function Form() {
                         </div>
                     </div>
 
-                    <div className="group">
+                    <div className="group" style={{
+                        marginLeft:"50px",
+                        height:"auto",
+                        flexDirection:"column",
+                        color:"red"
+                    }}>
                         <h6>** - Represents the availablity of venue is not guarantee.</h6>
+                        <h6>Poster Image should be in Image format (jpeg/jpg/png)</h6>
+                        <h6>Registration link is not compulsory to enter</h6>
                     </div>
                     <button className='submit-btn' onClick={validateData} disabled={disable}>SUBMIT</button>
                 </div>

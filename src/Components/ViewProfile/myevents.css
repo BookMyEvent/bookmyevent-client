@@ -1,0 +1,140 @@
+.user-page-events{
+    display: flex;
+    flex-direction: column;
+}
+.go-back{
+    width: max-content;
+    height: 10%;
+    text-decoration: none;
+    color: white;
+    margin-top: 2%;
+    margin-left: 2%;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    border: 0;
+    transition: all 1s ease-in;
+}
+
+.go-back:hover{
+    border-bottom: 1px solid white;
+}
+
+.user-events{
+    width: 100%;
+    height: auto;
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+    padding-top: 0%;
+}
+
+.myevents{
+    width: 75%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 60vh;
+    grid-row-gap: 30px;
+    grid-column-gap: 30px;
+    position: relative;
+    left: 12.5%;
+}
+
+.user-event-card{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.user-event-image{
+    height: 100%;
+    border-radius: 15px;
+}
+
+.user-event-body{
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-event-details{
+    height: 20%;
+    font-size: large;
+}
+
+.user-event-btn{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    border-radius: 15px;
+    background-color: white;
+}
+.hover{
+    opacity: 0.5;
+}
+.confirm{
+    background-color:grey;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5%;
+    text-align: justify;
+    z-index: 1;
+}
+.confirm-title{
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-btn{
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.confirm-del,.confirm-close{
+    width: 40%;
+    height: 100%;
+}
+
+.no-event{
+    color: white;
+}
+
+
+@media (max-width:768px) {
+    .myevents{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width:426px) {
+    .myevents{
+        grid-template-columns: 1fr;
+        grid-auto-rows: 80vh;
+    }
+    .go-back{
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+}

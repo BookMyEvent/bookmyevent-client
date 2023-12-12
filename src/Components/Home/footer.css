@@ -1,0 +1,154 @@
+.footer {
+    height: auto;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: 'Roboto';
+}
+
+.footer-items {
+    width: 40%;
+    height: auto;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-img {
+    padding: 10%;
+    height: auto;
+    margin-bottom: 2%;
+}
+
+.address {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: white;
+}
+
+.footer-location {
+    width: 55%;
+    height: auto;
+    text-align: center;
+}
+
+.maps {
+    width: 40%;
+    height: auto;
+    max-height: 120px;
+}
+
+.footer-loc {
+    width: auto;
+    height: auto;
+    padding-right: 3%;
+}
+
+.footer-subtitle {
+    height: 10%;
+    font-weight: 900    ;
+    color: white;
+}
+
+.user-email {
+    height: 15%;
+    margin: 2%;
+}
+
+.mail-body {
+    height: 50%;
+    margin: 2%;
+}
+
+.send-mail {
+    height: 15%;
+    margin: 2%;
+}
+
+.quick-links {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.links {
+    width: fit-content;
+    height: auto;
+    color: white;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.links:hover {
+    text-decoration: 1px solid white;
+}
+
+.contact-us{
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-content{
+    height: auto;
+    color:white;
+    font-size: large;
+    text-indent: 50px;
+}
+
+@media (max-width:769px) {
+    .footer {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .address {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .address>* {
+        width: 100%;
+        margin: 2%;
+    }
+
+    .footer-items {
+        width: 100%;
+        height: auto;
+        padding: 2%;
+    }
+
+    .maps {
+        width: 50%;
+        height: 40%;
+    }
+
+    .footer-img,
+    .address {
+        width: 94%;
+    }
+
+    .footer-location {
+        height: auto;
+    }
+
+    .user-email {
+        height: 10vh;
+        max-height: 50px;
+    }
+
+    .mail-body {
+        height: 30vh;
+        max-height: 120px;
+    }
+
+    .contact-us>* {
+        margin-bottom: 2%;
+    }
+}

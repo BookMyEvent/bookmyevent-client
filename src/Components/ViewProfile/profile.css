@@ -1,0 +1,64 @@
+.profile{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.profile-card{
+    width: 50%;
+    min-width: 300px;
+    height: auto;
+    min-height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1%;
+    background-color: white;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+}
+.profile-password,.profile-group{
+    width: 98%;
+    height: max-content;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Open Sans';
+    border: 1px solid grey;
+}
+.profile-topic{
+    width: 40%;
+    text-align: end;
+    padding: 2%;
+    font-weight: 900;
+}
+.profile-content{
+    width: 60%;
+    font-weight: 600;
+    padding: 2%;
+}
+
+.profile-password{
+    border: 0ch;
+}
+
+.change-password,.change-password:focus{
+    font-size: large;
+    width: 48%;
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+.update-password{
+    border: 1px solid black;
+    height: 15%;
+    width: 60%;
+    border-radius: 50px;
+}
+
+.profile-alert{
+    width: 40%;
+    height: 10%;
+}

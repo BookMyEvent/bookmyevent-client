@@ -1,0 +1,57 @@
+.signup{
+    height: 60%;
+}
+
+.options{
+    width: 80%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 1%;
+    font-weight: 700;
+    margin-bottom: 1%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border-color: black;
+}
+
+.section-signup,.section-signup-hod{
+    width: 80%;
+    height: 10%;
+    margin-bottom: 2%;
+    border: 1px solid black;
+    border-radius: 6px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.section-signup-hod{
+    height: 20%;
+    font-family: 'Open Sans', sans-serif;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dept-radio{
+    width: 70%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-title{
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 250%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.signup-icon{
+    font-size: x-large;
+}

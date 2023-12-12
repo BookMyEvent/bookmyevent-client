@@ -1,0 +1,28 @@
+.loading{
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner{
+    width: 325px;
+    height: 325px;
+    border: 6px solid black;
+    border-color: black transparent black transparent;
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width:426px) {
+    .spinner{
+        width: 250px;
+        height: 250px;
+    }
+}

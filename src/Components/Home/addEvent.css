@@ -1,0 +1,13 @@
+.add-event{
+    width: 100%;
+    position:fixed;
+    top:90%;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+    margin-right: 1%;
+}
+
+.add-event-btn{
+    width: fit-content;
+}

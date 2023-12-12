@@ -1,0 +1,10 @@
+.home-inactive{
+    opacity: 0.1;
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    align-items: end;
+}

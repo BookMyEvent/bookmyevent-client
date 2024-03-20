@@ -25,16 +25,26 @@ function EditEvent() {
     const [image, setImage] = useState("");
     const formBody = useRef();
 
+    // const venues = [
+    //     'CHOOSE A VENUE---',
+    //     'MULTI PURPOSE HALL',
+    //     'FUNCTION HALL',
+    //     'VIDEO HALL',
+    //     'LIBRARY SEMINAR HALL',
+    //     'BIO TECH SEMINAR HALL',
+    //     'LIBRARY CONFERENCE HALL',
+    //     'OTHERS**'
+    // ];
+
     const venues = [
-        'CHOOSE A VENUE---',
-        'MULTI PURPOSE HALL',
-        'FUNCTION HALL',
-        'VIDEO HALL',
-        'LIBRARY SEMINAR HALL',
-        'BIO TECH SEMINAR HALL',
-        'LIBRARY CONFERENCE HALL',
-        'OTHERS**'
-    ];
+        "CHOOSE A VENUE---",
+        "MULTI PURPOSE HALL",
+        "LIBRARY SEMINAR HALL",
+        "BIO TECH SEMINAR HALL",
+        "LIBRARY CONFERENCE HALL",
+        "OTHERS**",
+      ];
+      
     const sessions = ['FN', 'AN', 'EVNG', 'Full Day']
     const tsessions = ['9:00 AM-12:00 PM', '01:00 PM-04:00 PM', '04:00 PM-08:00 PM','Full Day']
 

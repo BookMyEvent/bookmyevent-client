@@ -36,11 +36,20 @@ export default function Form() {
   });
   const [disable, setDisable] = useState(true);
 
+  // const venues = [
+  //   "CHOOSE A VENUE---",
+  //   "MULTI PURPOSE HALL",
+  //   "FUNCTION HALL",
+  //   "VIDEO HALL",
+  //   "LIBRARY SEMINAR HALL",
+  //   "BIO TECH SEMINAR HALL",
+  //   "LIBRARY CONFERENCE HALL",
+  //   "OTHERS**",
+  // ];
+
   const venues = [
     "CHOOSE A VENUE---",
     "MULTI PURPOSE HALL",
-    "FUNCTION HALL",
-    "VIDEO HALL",
     "LIBRARY SEMINAR HALL",
     "BIO TECH SEMINAR HALL",
     "LIBRARY CONFERENCE HALL",

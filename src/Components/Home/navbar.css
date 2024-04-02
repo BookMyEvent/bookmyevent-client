@@ -113,7 +113,15 @@
     font-size: 500%;
     font-weight: 900;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+}
+
+.outer-nav-title-section{
+    width: 100%;
+    font-family: 'Poppins';
+    font-size: 90%;
+    font-weight: 900;
+
 }
 
 .navbar {

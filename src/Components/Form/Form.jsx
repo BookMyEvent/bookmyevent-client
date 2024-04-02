@@ -27,6 +27,7 @@ export default function Form() {
   const [link, setLink] = useState("");
   const [audienceType, setAudienceType] = useState({});
   const [venueName, setVenueName] = useState("");
+  const [todayDate, setTodayDate] = useState("");
 
   const formBody = useRef();
 
@@ -61,6 +62,14 @@ export default function Form() {
     "04:00 PM-08:00 PM",
     "Full Day",
   ];
+
+  async function fetchDate() {
+    const res = await fetch(
+      "http://worldtimeapi.org/api/timezone/Asia/Kolkata"
+    );
+    const data = await res.json();
+    setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));
+  }
 
   async function fetchBlockDates(det1, det2) {
     if (det2 != "" && det1 != "") {
@@ -362,9 +371,14 @@ export default function Form() {
       if (image.type.startsWith("image/")) {
         try {
           // Compress Image
-          const compressedFile = await compress(image, {quality:0.4,type:'image/jpeg'});
+          const compressedFile = await compress(image, {
+            quality: 0.4,
+            type: "image/jpeg",
+          });
           // Upload Image
-          return uploadImage(new File([compressedFile],'file',{type:'image/jpeg'}));
+          return uploadImage(
+            new File([compressedFile], "file", { type: "image/jpeg" })
+          );
         } catch (error) {
           console.log("Error compressing image:", error);
         }
@@ -379,6 +393,7 @@ export default function Form() {
   }
 
   async function fetchDept() {
+    await fetchDate();
     const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");
     const { dept } = await res.json();
     let temp = { All: false };
@@ -401,14 +416,13 @@ export default function Form() {
   useEffect(() => {
     if (!user.isAuth) navigate("/");
     fetchDept();
-    console.log(1);
   }, []);
 
   if (loading) {
     return <Loading />;
   }
 
-  console.log(audienceType);
+  console.log(todayDate);
 
   return (
     <div className="form-container">
@@ -467,7 +481,7 @@ export default function Form() {
             <input
               className="form-control inputs"
               type="date"
-              min={new Date().toISOString().slice(0, 10)}
+              min={todayDate}
               onChange={checkDate}
               placeholder="dd-mm-yyy"
               required

@@ -49,7 +49,6 @@ export default function Form() {
 
   const venues = [
     "CHOOSE A VENUE---",
-    "MULTI PURPOSE HALL",
     "LIBRARY SEMINAR HALL",
     "BIO TECH SEMINAR HALL",
     "LIBRARY CONFERENCE HALL",

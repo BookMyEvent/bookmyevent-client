@@ -54,7 +54,7 @@ function EditEvent() {
 
   async function fetchDate() {
     const res = await fetch(
-      "http://worldtimeapi.org/api/timezone/Asia/Kolkata"
+      "https://worldtimeapi.org/api/timezone/Asia/Kolkata"
     );
     const data = await res.json();
     setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));

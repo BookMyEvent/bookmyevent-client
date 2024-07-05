@@ -143,6 +143,8 @@
 }
 
 
+/* Event Card */
+
 .card-event {
     background-size: cover;
     display: flex;
@@ -194,10 +196,11 @@
 }
 
 .event-name {
-    padding: 6%;
+    padding: 5%;
     margin: 0%;
     padding-bottom: 7%;
     text-align: center;
+    overflow: hidden;
 }
 
 .view-event-details {

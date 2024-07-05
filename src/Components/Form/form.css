@@ -1,3 +1,4 @@
+/* Container Class */
 .form-container {
     width: 100%;
     height: 100%;
@@ -8,6 +9,33 @@
     font-family: 'Open sans';
 }
 
+/* Go Back Button Section */
+
+.go_back {
+    width: fit-content;
+    height: auto;
+    text-decoration: none;
+    position: fixed;
+    top: 1%;
+    left: 1%;
+}
+
+.go_back_span {
+    width: fit-content;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 50%;
+        border: 1px solid white;
+        padding: 30%;
+        font-size: xx-large;
+        color: white;
+}
+
+/* Form */
+
 .form {
     width: 80%;
     height: 90%;
@@ -17,6 +45,7 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+/* Left Logo Section */
 .card-form-img {
     width: 30%;
     display: flex;
@@ -24,10 +53,12 @@
     justify-content: center;
 }
 
-.form-logo{
+.form-logo {
     width: 100%;
     height: 70%;
 }
+
+/* Form input Section */
 
 .form-body {
     width: 70%;
@@ -36,6 +67,35 @@
     background-color: white;
     overflow-y: scroll;
 }
+
+/* Alert Section */
+
+.info {
+    width: 90%;
+    height: 10%;
+    margin: 1%;
+    position: relative;
+    left: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+
+.group,
+.time-group,
+.other-event-group {
+    width: 90%;
+    height: 8%;
+    position: relative;
+    left: 4%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1%;
+}
+
 
 .inputs {
     width: 60%;
@@ -56,40 +116,30 @@
     margin: 1%;
 }
 
-.group,.time-group,.other-event-group {
-    width: 90%;
-    height: 8%;
-    position: relative;
-    left: 4%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1%;
-}
-
-.group > *{
+.group>* {
     display: flex;
     align-items: center;
 }
 
-.time-group{
+.time-group {
     height: 16%;
 }
 
-.time-group-input,.group-input,.label-group-input {
+.time-group-input,
+.group-input,
+.label-group-input {
     width: 45%;
     height: 100%;
     justify-content: center;
 }
 
-.time-group-input{
+.time-group-input {
     display: flex;
     flex-direction: column;
 }
 
-.label-group-input{
-    width: fit-content  ;
+.label-group-input {
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -105,17 +155,6 @@
     position: relative;
     left: 4%;
     margin: 1%;
-}
-
-.info {
-    width: 90%;
-    height: 10%;
-    margin: 1%;
-    position: relative;
-    left: 4%;
-    display: flex;
-    align-items: center;
-    justify-content: start;
 }
 
 .submit-btn {
@@ -149,7 +188,7 @@
     font-size: 200%;
 }
 
-.checkbox-name{
+.checkbox-name {
     padding-left: 2%;
 }
 
@@ -163,7 +202,7 @@
     left: 5%;
 }
 
-.form-body::-webkit-scrollbar{
+.form-body::-webkit-scrollbar {
     width: 10px;
     border-radius: 0;
 }
@@ -177,7 +216,7 @@
     border-radius: 3px;
 }
 
-.form::-webkit-scrollbar{
+.form::-webkit-scrollbar {
     display: none;
 }
 
@@ -186,7 +225,7 @@
     .form {
         width: 100%;
         height: 85%;
-        left:0%;
+        left: 0%;
         top: 10%;
         overflow-y: scroll;
         background-color: white;
@@ -195,15 +234,17 @@
         padding: 0;
     }
 
-    .card-form-img{
+    .card-form-img {
         width: 100%;
         height: 40%;
     }
-    .form-logo{
+
+    .form-logo {
         width: auto;
         height: 100%;
     }
-    .form-body{
+
+    .form-body {
         width: 100%;
         height: 60%;
         left: 0;
@@ -212,7 +253,7 @@
         overflow-x: initial;
     }
 
-    .session > *{
+    .session>* {
         margin-bottom: 5%;
     }
 
@@ -224,7 +265,7 @@
         display: none;
     }
 
-    .inputs{
+    .inputs {
         width: 100%;
         height: 50%;
     }
@@ -240,7 +281,7 @@
         align-items: start;
     }
 
-    .other-event-group{
+    .other-event-group {
         height: 15%;
         margin-bottom: 4%;
     }
@@ -250,34 +291,37 @@
         height: 50%;
         margin-bottom: 4%;
     }
-    .time-group{
+
+    .time-group {
         height: 72%;
         flex-direction: column;
     }
-    .time-group-input{
+
+    .time-group-input {
         width: 100%;
         height: 50%;
         margin-bottom: 4%;
     }
-    .label-group-input{
+
+    .label-group-input {
         height: 50%;
         justify-content: start;
     }
 
-    .desc-input{
+    .desc-input {
         height: 30%;
         margin-bottom: 4%;
     }
 
-    .submit-btn{
+    .submit-btn {
         height: 12%;
     }
 
-    .info{
+    .info {
         height: 15%;
     }
 
-    .time-group-input > *{
+    .time-group-input>* {
         height: 50%;
     }
 }

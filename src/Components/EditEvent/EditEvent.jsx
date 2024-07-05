@@ -407,33 +407,8 @@ function EditEvent() {
   }
   return (
     <div className="form-container">
-      <Link
-        to="/"
-        style={{
-          width: "fit-content",
-          height: "auto",
-          textDecoration: "none",
-          position: "fixed",
-          top: "1%",
-          left: "1%",
-        }}
-      >
-        <span
-          class="material-symbols-outlined"
-          style={{
-            width: "fit-content",
-            height: "auto",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textDecoration: "none",
-            borderRadius: "50%",
-            border: "1px solid white",
-            padding: "30%",
-            fontSize: "xx-large",
-            color: "white",
-          }}
-        >
+      <Link to="/" className="go_back">
+        <span className="material-symbols-outlined go_back_span">
           arrow_back
         </span>
       </Link>

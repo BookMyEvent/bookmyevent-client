@@ -422,49 +422,32 @@ export default function Form() {
     return <Loading />;
   }
 
-  console.log(todayDate);
-
   return (
     <div className="form-container">
-      <Link
-        to="/"
-        style={{
-          width: "fit-content",
-          height: "auto",
-          textDecoration: "none",
-          position: "fixed",
-          top: "1%",
-          left: "1%",
-        }}
-      >
-        <span
-          class="material-symbols-outlined"
-          style={{
-            width: "fit-content",
-            height: "auto",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textDecoration: "none",
-            borderRadius: "50%",
-            border: "1px solid white",
-            padding: "30%",
-            fontSize: "xx-large",
-            color: "white",
-          }}
-        >
+      {/* Go back Button Section */}
+      <Link to="/" className="go_back">
+        <span className="material-symbols-outlined go_back_span">
           arrow_back
         </span>
       </Link>
+
+      {/* Form */}
+
       <div className="card form">
+
+        {/* Left Logo Section */}
         <div className="card-form-img">
           <img src={bme} className="form-logo" />
         </div>
+
+        {/* Form input Section */}
+        
         <div className="form-body">
+         
           {/* Alert */}
           <div className={`alert alert-${alert.type} info`} ref={formBody}>
             {alert.info}
-          </div>
+          </div>  
 
           {/* Date */}
           <div className="group">

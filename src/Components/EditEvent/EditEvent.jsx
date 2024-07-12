@@ -52,7 +52,7 @@ function EditEvent() {
                       ? `0${new Date(data.event.endTime).getMinutes()}`
                       : new Date(data.event.endTime).getMinutes()
                   }`;
-      console.log(data.event);
+       (data.event);
       setEvent({ ...data.event, date: data.event.date.slice(0, 10) });
       setLoading(false);
     } else {
@@ -63,7 +63,7 @@ function EditEvent() {
   // Convert the target audience array to Object
   async function fetchDept(event) {
 
-    console.log(event);
+     (event);
 
     // Fetch All the department from Server
     const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");

@@ -5,7 +5,7 @@ import {getStorage} from 'firebase/storage';
 
 const creditenials = import.meta.env
 
-console.log(creditenials);
+ (creditenials);
 
 const firebaseConfig = {
     apiKey: creditenials.VITE_REACT_API_KEY,

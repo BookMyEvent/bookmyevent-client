@@ -382,7 +382,7 @@ export default function Form({ formType, eventData }) {
       setLoading(true);
 
       if(formType === "Create"){
-      const res = await fetch("http://localhost:8080/api/addEvent", {
+      const res = await fetch("https://bookmyeventserver.vercel.app/api/addEvent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

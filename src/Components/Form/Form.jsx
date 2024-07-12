@@ -146,11 +146,9 @@ export default function Form({ formType, eventData }) {
   // Invokes when date/session field changes
   function checkDate(evt) {
     if (evt.target.type === "date") {
-       (12);
       setEvent({ ...event, date: evt.target.value });
       fetchBlockDates(evt.target.value, event.session);
     } else {
-       (123);
       setEvent({ ...event, session: evt.target.value });
       fetchBlockDates(event.date, evt.target.value);
     }

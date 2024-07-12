@@ -5,8 +5,6 @@ import {getStorage} from 'firebase/storage';
 
 const creditenials = import.meta.env
 
- (creditenials);
-
 const firebaseConfig = {
     apiKey: creditenials.VITE_REACT_API_KEY,
     authDomain: creditenials.VITE_REACT_AUTH_DOMAIN,

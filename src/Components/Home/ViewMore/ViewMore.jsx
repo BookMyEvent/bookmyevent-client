@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-import { resetView } from '../../slice/viewSlice';
+import { resetView } from '../../../slice/viewSlice';
 
 import './viewmore.css';
 

@@ -5,37 +5,38 @@ import Loading from "../Loading/Loading";
 import bme from "../../Assets/bookmyevent.png";
 import { storage } from "../../auth/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { compress, compressAccurately } from "image-conversion";
+import { compress } from "image-conversion";
 
 import "./form.css";
 
-export default function Form() {
+export default function Form({ formType, eventData }) {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
 
+  // Loading state
   const [loading, setLoading] = useState(true);
-  const [date, setDate] = useState("");
-  const [audience, setAudience] = useState(0);
-  const [venue, setVenue] = useState("");
-  const [event, setEvent] = useState("");
-  const [desc, setDesc] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [image, setImage] = useState("");
+
+  // Event details
+  const [event, setEvent] = useState({ ...eventData });
+
+  // List of blocked Venues
   const [block, setBlock] = useState([]);
-  const [session, setSession] = useState("");
-  const [link, setLink] = useState("");
-  const [audienceType, setAudienceType] = useState({});
-  const [venueName, setVenueName] = useState("");
+
+  // Today's date
   const [todayDate, setTodayDate] = useState("");
 
+  // Ref for form
   const formBody = useRef();
 
+  // Alert Information State
   const [alert, setAlert] = useState({
     type: "info",
     info: "Enter the Date and Session",
   });
-  const [disable, setDisable] = useState(true);
+
+  // Disable/Enable input fields
+    const [disable, setDisable] = useState(formType === "Edit" ? false : true);
+
 
   // const venues = [
   //   "CHOOSE A VENUE---",
@@ -48,6 +49,8 @@ export default function Form() {
   //   "OTHERS**",
   // ];
 
+  // List of Venues
+
   const venues = [
     "CHOOSE A VENUE---",
     "LIBRARY SEMINAR HALL",
@@ -55,7 +58,11 @@ export default function Form() {
     "LIBRARY CONFERENCE HALL",
     "OTHERS**",
   ];
+
+  // Sessions
   const sessions = ["FN", "AN", "EVNG", "Full Day"];
+
+  // Timings for each Session
   const tsessions = [
     "9:00 AM-12:00 PM",
     "01:00 PM-04:00 PM",
@@ -63,34 +70,64 @@ export default function Form() {
     "Full Day",
   ];
 
-  async function fetchDate() {
+  // To Fetch Today Date and Time
+  async function fetchTodayDate() {
+    // API Call to get accurate IST
     const res = await fetch(
-      "http://worldtimeapi.org/api/timezone/Asia/Kolkata"
+      "https://worldtimeapi.org/api/timezone/Asia/Kolkata"
     );
     const data = await res.json();
+
+    // Date Format ->  YYYY-MM-DD
     setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));
   }
 
-  async function fetchBlockDates(det1, det2) {
-    if (det2 != "" && det1 != "") {
+  // Fetch the Blocked Venues for Given Date & Session
+  async function fetchBlockDates(date, session) {
+    if (date != "" && session != "") {
+      // Temporarily disable all the input fields till the blocked venues is fetched
       setDisable(true);
+
+      // Fetch the blocked Venues from Server
       const result = await fetch(
         "https://bookmyeventserver.vercel.app/api/checkDate",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            date: det1,
-            session: det2,
+            date: date,
+            session: session,
           }),
         }
       );
-      const programs = await result.json();
-      let lst = programs.blocked;
-      let temp = lst.map((item) => item[1]);
-      setBlock(temp);
+      const data = await result.json();
 
-      if (lst.length === 6) {
+      /*
+        Format -> {
+                    blocked : [
+                                [event_id,event_venue],
+                                ...
+                            ]
+                }
+
+    */
+
+      // Update the blocked venue state
+      let blocked_venue_with_id = data.blocked;
+      let blocked_venues = [];
+
+      // Exclude the booked venue from Block list
+      if (formType === "Edit") {
+        blocked_venue_with_id = blocked_venue_with_id.filter(
+          (item) => event._id != item[0]
+        );
+      }
+
+      blocked_venues = blocked_venue_with_id.map((item) => item[1]);
+
+      setBlock(blocked_venues);
+
+      if (blocked_venues.length === 6) {
         setAlert({
           type: "warning",
           info: "Oops! All venues are full.You can use either your Department or others",
@@ -100,21 +137,26 @@ export default function Form() {
         type: "success",
         info: "Venues are available",
       });
+
+      // Unfreeze all the input fields
       setDisable(false);
     }
   }
 
+  // Invokes when date/session field changes
   function checkDate(evt) {
     if (evt.target.type === "date") {
-      setDate(evt.target.value);
-      fetchBlockDates(evt.target.value, session);
+      console.log(12);
+      setEvent({ ...event, date: evt.target.value });
+      fetchBlockDates(evt.target.value, event.session);
     } else {
-      setSession(evt.target.value);
-      fetchBlockDates(date, evt.target.value);
+      console.log(123);
+      setEvent({ ...event, session: evt.target.value });
+      fetchBlockDates(event.date, evt.target.value);
     }
-    setVenue("CHOOSE A VENUE---");
   }
 
+  // Invokes when error occurs
   function generateDangerAlert(info) {
     setAlert({
       type: "danger",
@@ -123,71 +165,74 @@ export default function Form() {
     formBody.current.scrollIntoView();
   }
 
+  // Validate all the field values
   async function validateData(evt) {
     evt.preventDefault();
-    if (audience === 0) {
+
+    if (event.audience === 0) {
       generateDangerAlert("Enter the audience limit");
       return;
     }
-    if (venue === "" || venue === "CHOOSE A VENUE---") {
+
+    if (event.venue === "" || event.venue === "CHOOSE A VENUE---") {
       generateDangerAlert("Enter the venue");
       return;
     }
 
-    switch (venue) {
+    switch (event.venue) {
       case "LIBRARY CONFERENCE HALL":
-        if (audience > 25) {
+        if (event.audience > 25) {
           generateDangerAlert("Maximum Allowed Occupancy - 25");
           return;
         }
         break;
 
       case "BIO TECH SEMINAR HALL": // Upto 80
-        if (audience > 80) {
+        if (event.audience > 80) {
           generateDangerAlert("Maximum Allowed Occupancy - 80");
           return;
         }
         break;
 
       case "LIBRARY SEMINAR HALL": //Upto 80
-        if (audience > 80) {
+        if (event.audience > 80) {
           generateDangerAlert("Maximum Allowed Occupancy - 80");
           return;
         }
         break;
 
       case "VIDEO HALL": //Upto 120
-        if (audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
           generateDangerAlert("Bio-tech Seminar Hall is Available");
           return;
         }
-        if (audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
           generateDangerAlert("Library Seminar Hall is Available");
           return;
         }
-        if (audience > 120) {
+        if (event.audience > 120) {
           generateDangerAlert("Maximum Allowed Occupancy - 120");
           return;
         }
         break;
 
       case "FUNCTION HALL": // Upto 240
-        if (audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
           generateDangerAlert("Bio-tech Seminar Hall is Available");
           return;
         }
 
-        if (audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
           generateDangerAlert("Library Seminar Hall is Available");
           return;
         }
 
-        if (audience <= 120 && !block.includes("VIDEO HALL")) {
+        if (event.audience <= 120 && !block.includes("VIDEO HALL")) {
           generateDangerAlert("Video Hall is Available");
           return;
         }
 
-        if (audience > 240) {
+        if (event.audience > 240) {
           generateDangerAlert("Maximum Allowed occupancies - 240");
           return;
         }
@@ -195,155 +240,158 @@ export default function Form() {
         break;
 
       case "MULTI PURPOSE HALL":
-        if (audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("BIO TECH SEMINAR HALL")) {
           generateDangerAlert("Bio-tech Seminar Hall is Available");
           return;
         }
 
-        if (audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
+        if (event.audience <= 80 && !block.includes("LIBRARY SEMINAR HALL")) {
           generateDangerAlert("Library Seminar Hall is Available");
           return;
         }
 
-        if (audience <= 120 && !block.includes("VIDEO HALL")) {
+        if (event.audience <= 120 && !block.includes("VIDEO HALL")) {
           generateDangerAlert("Video Hall is Available");
           return;
         }
 
-        if (audience <= 240 && !block.includes("FUNCTION HALL")) {
+        if (event.audience <= 240 && !block.includes("FUNCTION HALL")) {
           generateDangerAlert("Function Hall is Available");
           return;
         }
         break;
 
       case "OTHERS**":
-        if (venueName.trim() === "") {
+        if (event.venueName.trim() === "") {
           generateDangerAlert("Enter the Venue");
           return;
         }
         break;
     }
 
-    if (event.trim() === "") {
+    if (event.event.trim() === "") {
       generateDangerAlert("Enter the Event Name");
       return;
     }
-    if (image === "") {
+    if (event.image === "") {
       generateDangerAlert("Upload the Event Image");
       return;
     }
-    if (desc.trim() === "") {
+    if (event.description.trim() === "") {
       generateDangerAlert("Enter the Description");
       return;
     }
-    if (startTime.trim() === "") {
+    if (event.startTime.trim() === "") {
       generateDangerAlert("Enter the Event Start Time");
       return;
     }
-    if (endTime.trim() === "") {
+    if (event.endTime.trim() === "") {
       generateDangerAlert("Enter the Event End Time");
       return;
     }
 
-    switch (session) {
+    switch (event.session) {
       case "FN":
         if (
-          Number(endTime.split(":")[0]) === 12 &&
-          Number(endTime.split(":")[1]) > 0
+          Number(event.endTime.split(":")[0]) === 12 &&
+          Number(event.endTime.split(":")[1]) > 0
         ) {
           generateDangerAlert("Program should end by 12:00 PM");
           return;
         }
-        if (Number(endTime.split(":")[0]) > 12) {
+        if (Number(event.endTime.split(":")[0]) > 12) {
           generateDangerAlert("Program should end by 12:00 PM");
           return;
         }
         break;
       case "AN":
-        if (Number(startTime.split(":")[0]) < 13) {
+        if (Number(event.startTime.split(":")[0]) < 13) {
           generateDangerAlert("Program should start from atleast 1:00 PM");
           return;
         }
         break;
 
       case "EVNG":
-        if (Number(startTime.split(":")[0]) < 16) {
+        if (Number(event.startTime.split(":")[0]) < 16) {
           generateDangerAlert("Program should start from atleast 4:00 PM");
           return;
         }
         break;
     }
-    if (Number(startTime.split(":")[0]) > Number(endTime.split(":")[0])) {
-      generateDangerAlert("Invalid Program Timings");
-      return;
-    }
-
     if (
-      Number(startTime.split(":")[0]) === Number(endTime.split(":")[0]) &&
-      Number(startTime.split(":")[1]) > Number(endTime.split(":")[1])
+      Number(event.startTime.split(":")[0]) >
+      Number(event.endTime.split(":")[0])
     ) {
       generateDangerAlert("Invalid Program Timings");
       return;
     }
 
-    let allowed = [];
-    for (let item in audienceType) {
-      if (audienceType[item] === true) allowed.push(item);
+    if (
+      Number(event.startTime.split(":")[0]) ===
+        Number(event.endTime.split(":")[0]) &&
+      Number(event.startTime.split(":")[1]) >
+        Number(event.endTime.split(":")[1])
+    ) {
+      generateDangerAlert("Invalid Program Timings");
+      return;
     }
-    if (allowed.length === 0) {
+
+    let allowed_department = [];
+
+    for (let dept in event.target_audience) {
+      if (event.target_audience[dept] === true) allowed_department.push(dept);
+    }
+
+    if (allowed_department.length === 0) {
       generateDangerAlert("Choose the Target Audience");
       return;
     }
 
-    if (allowed.length > 1 && allowed.includes("All")) {
+    if (allowed_department.length > 1 && allowed_department.includes("All")) {
       generateDangerAlert("You cannot choose department since All is selected");
       return;
     }
 
-    let temp = new Date(date);
+    let event_date = new Date(event.date);
+    // Generate Start and End Time in the format YYYY-MM-DDTHH:MM:SS.
     let start = new Date(
-      temp.getFullYear(),
-      temp.getMonth(),
-      temp.getDate(),
-      startTime.slice(0, 2),
-      startTime.slice(3, 5)
+      event_date.getFullYear(),
+      event_date.getMonth(),
+      event_date.getDate(),
+      event.startTime.slice(0, 2),
+      event.startTime.slice(3, 5)
     );
     let end = new Date(
-      temp.getFullYear(),
-      temp.getMonth(),
-      temp.getDate(),
-      endTime.slice(0, 2),
-      endTime.slice(3, 5)
+      event_date.getFullYear(),
+      event_date.getMonth(),
+      event_date.getDate(),
+      event.endTime.slice(0, 2),
+      event.endTime.slice(3, 5)
     );
 
+    // Compress the image and upload it to firebase and store the generated url
     const img = await handleImage();
+
+    event.startTime = start;
+    event.endTime = end;
+    event.image = img;
+    event.venueName = event.venue === "OTHERS**" && event.venueName;
+    event.target_audience = allowed_department;
 
     if (img != "false") {
       setLoading(true);
-      const res = await fetch(
-        "https://bookmyeventserver.vercel.app/api/addEvent",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            date,
-            audience,
-            venue,
-            event,
-            description: desc,
-            start,
-            end,
-            session,
-            link,
-            club: user.type != "HOD" && user.name,
-            dept: user.type != "General Club" && user.dept,
-            image: img,
-            allowed,
-            venueName: venue === "OTHERS**" && venueName,
-            email: user.email,
-          }),
-        }
-      );
+
+      if(formType === "Create"){
+      const res = await fetch("http://localhost:8080/api/addEvent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          club: user.type != "HOD" && user.name,
+          department: user.type != "General Club" && user.dept,
+          email: user.email,
+          ...event,
+        }),
+      });
       const { status } = await res.json();
       if (status === "Success") navigate("/");
       else {
@@ -351,27 +399,47 @@ export default function Form() {
         generateDangerAlert(status);
       }
     }
+    else{
+      const res = await fetch(
+        "https://bookmyeventserver.vercel.app/api/updateEvent",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ event }),
+        }
+      );
+      const { status } = await res.json();
+      if (status === "Success") navigate("/view-profile");
+      else generateDangerAlert(status);
+    }
+    }
   }
 
   // Firebase Upload
   async function uploadImage(image) {
     const storageRef = ref(
       storage,
-      `posters/${event}_${user.dept}_${date.toString()}`
+      `posters/${event.event}_${user.dept}_${event.date.toString()}`
     );
     await uploadBytes(storageRef, image);
     const res = await getDownloadURL(
-      ref(storage, `posters/${event}_${user.dept}_${date.toString()}`)
+      ref(
+        storage,
+        `posters/${event.event}_${user.dept}_${event.date.toString()}`
+      )
     );
     return res;
   }
 
+  // Compress the Image and then upload to Firebase
   async function handleImage() {
-    if (image != undefined) {
-      if (image.type.startsWith("image/")) {
+    if (event.image != undefined ) {
+      if(typeof(event.image) === "string")
+        return event.image;
+      if (event.image.type.startsWith("image/")) {
         try {
           // Compress Image
-          const compressedFile = await compress(image, {
+          const compressedFile = await compress(event.image, {
             quality: 0.4,
             type: "image/jpeg",
           });
@@ -392,35 +460,46 @@ export default function Form() {
     }
   }
 
+  // Get all the department from Server and initialize the target audience
   async function fetchDept() {
-    await fetchDate();
+    // Fetch All the department from Server
+    await fetchTodayDate();
     const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");
     const { dept } = await res.json();
-    let temp = { All: false };
-    dept.sort((a, b) => {
-      let a1 = a.toLowerCase();
-      let b1 = b.toLowerCase();
-      if (a1 < b1) {
-        return -1;
-      }
-      if (a1 > b1) {
-        return 1;
-      }
-      return 0;
-    });
-    for (let i of dept) temp[i] = false;
-    setAudienceType(temp);
+
+    // Initialize Target Audience Object
+    let target_audience = { All: false };
+
+    // Department from Server will be in Ascending Order by default
+    // Initialize every department as false
+    // For New Event Page
+
+    for (let department of dept) target_audience[department] = false;
+
+    // Set the target audience state
+    setEvent({ ...event, target_audience: target_audience });
+    // Close the loading
     setLoading(false);
   }
 
   useEffect(() => {
-    if (!user.isAuth) navigate("/");
-    fetchDept();
+    if (!user.isAuth) 
+      navigate("/");
+    else if(formType === "Create")
+      fetchDept();
   }, []);
+
+  useEffect(() => {
+    if(loading === true && formType === "Edit")
+      setLoading(false);
+    else
+      setEvent({ ...event, venue: "CHOOSE A VENUE---" });
+  }, [event.date, event.session]);
 
   if (loading) {
     return <Loading />;
   }
+
 
   return (
     <div className="form-container">
@@ -434,20 +513,18 @@ export default function Form() {
       {/* Form */}
 
       <div className="card form">
-
         {/* Left Logo Section */}
         <div className="card-form-img">
           <img src={bme} className="form-logo" />
         </div>
 
         {/* Form input Section */}
-        
+
         <div className="form-body">
-         
           {/* Alert */}
           <div className={`alert alert-${alert.type} info`} ref={formBody}>
             {alert.info}
-          </div>  
+          </div>
 
           {/* Date */}
           <div className="group">
@@ -464,6 +541,7 @@ export default function Form() {
             <input
               className="form-control inputs"
               type="date"
+              value={event.date}
               min={todayDate}
               onChange={checkDate}
               placeholder="dd-mm-yyy"
@@ -489,6 +567,7 @@ export default function Form() {
                     value={item}
                     key={index}
                     name="Session"
+                    defaultChecked={event.session === item ? true : false}
                   />
                   <label
                     className="form-check-label d-flex justify-content-center align-items-center"
@@ -510,17 +589,18 @@ export default function Form() {
               type="number"
               placeholder="No. of Audience*"
               min={1}
+              value={event.audience}
               disabled={disable}
               onChange={(evt) => {
-                setAudience(evt.target.value);
+                setEvent({ ...event, audience: evt.target.value });
               }}
               required
             />
             <select
               className="form-select group-input"
-              value={venue}
+              value={event.venue}
               onChange={(evt) => {
-                setVenue(evt.target.value);
+                setEvent({ ...event, venue: evt.target.value });
               }}
               disabled={disable}
               required
@@ -539,25 +619,29 @@ export default function Form() {
             </select>
           </div>
 
-          {venue === "OTHERS**" && (
+          {event.venue === "OTHERS**" && (
             <div className="other-event-group">
               <input
                 className="form-control"
                 placeholder="Enter the venue*"
+                value={event.venueName}
                 onChange={(evt) => {
-                  setVenueName(evt.target.value);
+                  setEvent({ ...event, venueName: evt.target.value });
                 }}
               />
             </div>
           )}
+
+          {/* Event Name and Poster */}
 
           <div className="group">
             <input
               className="form-control group-input"
               placeholder="Name of the Event*"
               disabled={disable}
+              value={event.event}
               onChange={(evt) => {
-                setEvent(evt.target.value);
+                setEvent({ ...event, event: evt.target.value });
               }}
               required
             />
@@ -567,27 +651,35 @@ export default function Form() {
               type="file"
               disabled={disable}
               onChange={(evt) => {
-                setImage(evt.target.files[0]);
+                setEvent({ ...event, image: evt.target.files[0] });
               }}
             />
           </div>
+
+          {/* Description */}
           <textarea
             className="form-control desc-input"
             placeholder="Description*"
             disabled={disable}
+            value={event.description}
             onChange={(evt) => {
-              setDesc(evt.target.value);
+              setEvent({ ...event, description: evt.target.value });
             }}
             required
           />
+
+          {/* Registration Link */}
           <input
             className="form-control other-event-group"
             placeholder="Registration Link"
             disabled={disable}
+            value={event.link}
             onChange={(evt) => {
-              setLink(evt.target.value);
+              setEvent({ ...event, link: evt.target.value });
             }}
           />
+
+          {/* Target Audience */}
           <h5 className="target">Target Audience*</h5>
           <div
             className="checkbox"
@@ -600,17 +692,18 @@ export default function Form() {
               left: "5%",
             }}
           >
-            {Object.keys(audienceType).map((item) => {
+            {Object.keys(event.target_audience).map((item) => {
               return (
                 <span className="checkbox-item">
                   <input
                     className="checkbox-btn"
                     type="checkbox"
+                    defaultChecked={event.target_audience[item] && true}
                     disabled={disable}
                     onChange={() => {
-                      let temp = audienceType;
+                      let temp = event.target_audience;
                       temp[item] = !temp[item];
-                      setAudienceType(temp);
+                      setEvent({ ...event, target_audience: temp });
                     }}
                     value={item}
                   />
@@ -620,6 +713,8 @@ export default function Form() {
             })}
           </div>
 
+          {/* Start and End Time */}
+
           <div className="time-group">
             <div className="time-group-input">
               <h5 className="label-group-input">Start Time*</h5>
@@ -627,9 +722,11 @@ export default function Form() {
                 className="form-control"
                 type="time"
                 disabled={disable}
-                placeholder="hh:mm"
+                value={
+                  event.startTime
+                }
                 onChange={(evt) => {
-                  setStartTime(evt.target.value);
+                  setEvent({ ...event, startTime: evt.target.value });
                 }}
                 required
               />
@@ -642,8 +739,11 @@ export default function Form() {
                 type="time"
                 disabled={disable}
                 placeholder="hh:mm"
+                value={
+                  event.endTime
+                }
                 onChange={(evt) => {
-                  setEndTime(evt.target.value);
+                  setEvent({ ...event, endTime: evt.target.value });
                 }}
                 required
               />

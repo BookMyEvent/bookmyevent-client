@@ -1,0 +1,30 @@
+.profile-home {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-go-back {
+    width: 20%;
+    height: auto;
+    text-decoration: none;
+    position: relative;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.profile-go-back-span {
+    width: fit-content;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 50%;
+    border: 1px solid white;
+    padding: 5%;
+    font-size: xx-large;
+    color: white;
+}

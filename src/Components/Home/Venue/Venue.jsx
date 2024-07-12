@@ -1,20 +1,20 @@
 import React from 'react';
-import BioTech1 from "../../Assets/Bio Tech Seminar Hall (1).jpg"
-import BioTech2 from "../../Assets/Bio Tech Seminar Hall (2).jpg"
-import BioTech3 from "../../Assets/Bio Tech Seminar Hall (3).jpg"
-import LibraryHall1 from "../../Assets/Library Seminar Hall (1).jpg"
-import LibraryHall2 from "../../Assets/Library Seminar Hall (2).jpg"
-import LibraryHall3 from "../../Assets/Library Seminar Hall (3).jpg"
-import mph from "../../Assets/MPH.jpeg";
-import FunctionHall from "../../Assets/Function Hall.jpeg";
-import FunctionHall2 from "../../Assets/Function Hall(1).jpg";
-import FunctionHall3 from "../../Assets/Function Hall(2).jpg";
-import VideoHall from "../../Assets/Video Hall.jpg";
-import VideoHall1 from "../../Assets/Video Hall (2).jpg";
-import ConferenceHall1 from '../../Assets/Conference Hall (1).jpeg';
-import ConferenceHall2 from '../../Assets/Conference Hall (2).jpeg';
-import ConferenceHall3 from '../../Assets/Conference Hall (3).jpeg';
-import ConferenceHall4 from '../../Assets/Conference Hall (4).jpeg';
+import BioTech1 from "../../../Assets/Bio Tech Seminar Hall (1).jpg"
+import BioTech2 from "../../../Assets/Bio Tech Seminar Hall (2).jpg"
+import BioTech3 from "../../../Assets/Bio Tech Seminar Hall (3).jpg"
+import LibraryHall1 from "../../../Assets/Library Seminar Hall (1).jpg"
+import LibraryHall2 from "../../../Assets/Library Seminar Hall (2).jpg"
+import LibraryHall3 from "../../../Assets/Library Seminar Hall (3).jpg"
+import mph from "../../../Assets/MPH.jpeg";
+import FunctionHall from "../../../Assets/Function Hall.jpeg";
+import FunctionHall2 from "../../../Assets/Function Hall(1).jpg";
+import FunctionHall3 from "../../../Assets/Function Hall(2).jpg";
+import VideoHall from "../../../Assets/Video Hall.jpg";
+import VideoHall1 from "../../../Assets/Video Hall (2).jpg";
+import ConferenceHall1 from '../../../Assets/Conference Hall (1).jpeg';
+import ConferenceHall2 from '../../../Assets/Conference Hall (2).jpeg';
+import ConferenceHall3 from '../../../Assets/Conference Hall (3).jpeg';
+import ConferenceHall4 from '../../../Assets/Conference Hall (4).jpeg';
 
 
 import './venue.css';

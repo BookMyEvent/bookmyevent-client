@@ -11,16 +11,6 @@
     font-weight: 900;
 }
 
-.events {
-    height: auto;
-    min-height: 88%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3%;
-    margin-bottom: 5%;
-}
-
 .sort {
     width: fit-content;
     display: flex;
@@ -82,17 +72,6 @@
     left: 0%;
 }
 
-.no-event {
-    width: 100%;
-    height: auto;
-    min-height: 88%;
-    color: darkblue;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
 .upcoming {
     width: 90%;
     height: auto;
@@ -142,79 +121,6 @@
     opacity: 0.7;
 }
 
-
-/* Event Card */
-
-.card-event {
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    border-radius: 30px;
-    transition: all 1s linear;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.card-event:hover {
-    transform: translateY(-10px);
-}
-
-.event-info {
-    height: 40%;
-    color: white;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-
-}
-
-.event-info>* {
-    /* height: auto; */
-    overflow: clip;
-}
-
-.event-info * {
-    position: relative;
-}
-
-.event-info::before {
-    content: "";
-    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
-    width: 110%;
-    height: 200%;
-    position: absolute;
-    top: 10%;
-    transform: rotate(-8deg);
-    border-top-right-radius: 28%;
-}
-
-.event-name {
-    padding: 5%;
-    margin: 0%;
-    padding-bottom: 7%;
-    text-align: center;
-    overflow: hidden;
-}
-
-.view-event-details {
-    padding-left: 8%;
-    display: flex;
-    font-family: 'Roboto';
-    font-size: large;
-}
-
-.event-icon {
-    width: fit-content;
-    padding-right: 5%;
-}
-
 @media (max-width:426px) {
     .upcoming {
         width: 75%;
@@ -222,13 +128,6 @@
         grid-auto-rows: 275px;
     }
 
-    .event-name {
-        font-size: 150%;
-        text-align: center;
-    }
-    .view-event-details{
-        font-size: 100%;
-    }
     .no-event{
         font-size: 100%;
     }

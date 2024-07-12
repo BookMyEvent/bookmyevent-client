@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../../auth/firebase";
-import "./navbar.css";
-import { signout } from "../../slice/userDetails";
-import { changeNavState } from "../../slice/navSlice";
-import svce from "../../Assets/SVCE.png";
-import iqac from "../../Assets/IQAC.png";
-import bme from "../../Assets/bookmyevent.png";
-import Loading from "../Loading/Loading";
+import { auth } from "../../../auth/firebase";
+import { signout } from "../../../slice/userDetails";
+import { changeNavState } from "../../../slice/navSlice";
+import svce from "../../../Assets/SVCE.png";
+import iqac from "../../../Assets/IQAC.png";
+import bme from "../../../Assets/bookmyevent.png";
+import Loading from "../../Loading/Loading";
 import CountUp from "react-countup";
+import "./navbar.css";
 
 export default function NavBar() {
   const user = useSelector((store) => store.user);

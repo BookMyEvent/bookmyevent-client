@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../auth/firebase';
-import { signout } from '../../slice/userDetails';
+import { auth } from '../../../auth/firebase';
+import { signout } from '../../../slice/userDetails';
 import { signOut } from 'firebase/auth';
 import './profile.css';
 function Profile() {

@@ -2,13 +2,18 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import {getStorage} from 'firebase/storage';
 
+
+const creditenials = import.meta.env
+
+console.log(creditenials);
+
 const firebaseConfig = {
-    apiKey: "AIzaSyAVPjuJBSnRI31OaDeRIGtvYcgRubdaHFg",
-    authDomain: "bookmyevent-2d1e9.firebaseapp.com",
-    projectId: "bookmyevent-2d1e9",
-    storageBucket: "bookmyevent-2d1e9.appspot.com",
-    messagingSenderId: "67971930501",
-    appId: "1:67971930501:web:343ca5df0c0661fcc98cec"
+    apiKey: creditenials.VITE_REACT_API_KEY,
+    authDomain: creditenials.VITE_REACT_AUTH_DOMAIN,
+    projectId: creditenials.VITE_REACT_PROJECTID,
+    storageBucket: creditenials.VITE_REACT_STORAGEBUCKET,
+    messagingSenderId: creditenials.VITE_REACT_MESSAGING_SENDER_ID,
+    appId: creditenials.VITE_REACT_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

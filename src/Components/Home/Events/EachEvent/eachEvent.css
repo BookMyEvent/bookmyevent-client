@@ -1,0 +1,128 @@
+/* Event Card */
+
+.each-event-card-event {
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    border-radius: 30px;
+    transition: all 1s linear;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.each-event-card-event:hover {
+    transform: translateY(-10px);
+}
+
+.each-event-event-info {
+    height: 40%;
+    color: white;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+}
+
+.each-event-event-info>* {
+    /* height: auto; */
+    overflow: clip;
+}
+
+.each-event-event-info * {
+    position: relative;
+}
+
+.each-event-event-info::before {
+    content: "";
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    width: 110%;
+    height: 200%;
+    position: absolute;
+    top: 10%;
+    transform: rotate(-8deg);
+    border-top-right-radius: 28%;
+}
+
+.each-event-event-name {
+    padding: 5%;
+    margin: 0%;
+    padding-bottom: 7%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.each-event-view-event-details {
+    padding-left: 8%;
+    display: flex;
+    font-family: 'Roboto';
+    font-size: large;
+}
+
+.each-event-event-icon {
+    width: fit-content;
+    padding-right: 5%;
+}
+
+
+.confirm{
+    background-color:grey;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5%;
+    text-align: justify;
+    z-index: 1;
+}
+.confirm-title{
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-btn{
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.confirm-del,.confirm-close{
+    width: 40%;
+    height: 100%;
+}
+
+.user-event-btn{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    border-radius: 15px;
+    background-color: white;
+}
+
+@media (max-width:426px) {
+    .each-event-event-name {
+        font-size: 150%;
+        text-align: center;
+    }
+
+    .each-event-view-event-details {
+        font-size: 100%;
+    }
+}

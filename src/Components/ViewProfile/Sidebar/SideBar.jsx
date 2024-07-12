@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeNavState } from '../../slice/viewProfile';
-import { auth } from '../../auth/firebase';
+import { changeNavState } from '../../../slice/viewProfile';
+import { auth } from '../../../auth/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import { signout } from '../../slice/userDetails';
-import bme from "../../Assets/bookmyevent.png";
-import svce from "../../Assets/SVCE.png";
-import iqac from "../../Assets/IQAC.png";
+import { signout } from '../../../slice/userDetails';
+import bme from "../../../Assets/bookmyevent.png";
+import svce from "../../../Assets/SVCE.png";
+import iqac from "../../../Assets/IQAC.png";
 import './sidebar.css';
 
 function SideBar() {

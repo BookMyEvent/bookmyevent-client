@@ -6,7 +6,11 @@ import AddIcon from "@mui/icons-material/Add"
 import './addEvent.css';
 
 export default function AddEvent() {
+
+    // Get the User Information
     const user = useSelector(store => store.user);
+    
+    
     return (
         <div className='add-event'>
             {

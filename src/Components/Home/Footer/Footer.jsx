@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { changeNavState } from '../../slice/navSlice';
+import { changeNavState } from '../../../slice/navSlice';
 import "./footer.css";
 
 function Footer() {

@@ -23,7 +23,7 @@ export default function Form({ formType, eventData }) {
   const [block, setBlock] = useState([]);
 
   // Today's date
-  const [todayDate, setTodayDate] = useState("");
+  const [todayDate, setTodayDate] = new Date();
 
   // Ref for form
   const formBody = useRef();
@@ -461,7 +461,6 @@ export default function Form({ formType, eventData }) {
   // Get all the department from Server and initialize the target audience
   async function fetchDept() {
     // Fetch All the department from Server
-    await fetchTodayDate();
     const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");
     const { dept } = await res.json();
 

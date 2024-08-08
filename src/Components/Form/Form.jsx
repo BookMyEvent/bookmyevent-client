@@ -23,9 +23,8 @@ export default function Form({ formType, eventData }) {
   const [block, setBlock] = useState([]);
 
   // Today's date
-  const [todayDate, setTodayDate] = new Date();
-
-  // Ref for form
+  const [todayDate, setTodayDate] = new Date().toISOString().slice(0, 10); 
+ // Ref for form
   const formBody = useRef();
 
   // Alert Information State

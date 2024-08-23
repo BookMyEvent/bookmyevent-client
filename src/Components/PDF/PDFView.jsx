@@ -156,7 +156,7 @@ function GeneratePDF({ events }) {
                         <Text style={{ fontSize: 15, textAlign: "center" }}>Sriperumbudur Tk, Kancheepuram Dt, Tamilnadu, India - 602117</Text>
                     </View>
                 </View>
-                <Text style={styles.title}>Event Report for the Academic Year:{events[0].startTime.slice(0, 10).split("-")[0]} - {Number(events[0].startTime.slice(0, 10).split("-")[0]) + 1}</Text>
+                <Text style={styles.title}>Event Report for the Academic Year:{events[0].startTime.slice(0, 10).split("-")[0]} - {Number(events[events.length-1].startTime.slice(0, 10).split("-")[0])}</Text>
                 <View style={styles.table}>
                     <View style={{ ...styles.text, borderTopWidth: '1px' }} fixed>
                         <Text style={{ ...styles.content, borderLeftWidth: '1px' }}>Event Name</Text>

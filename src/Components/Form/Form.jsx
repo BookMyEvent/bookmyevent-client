@@ -291,13 +291,9 @@ export default function Form({ formType, eventData }) {
     switch (event.session) {
       case "FN":
         if (
-          Number(event.endTime.split(":")[0]) === 12 &&
-          Number(event.endTime.split(":")[1]) > 0
+          (Number(event.endTime.split(":")[0]) === 12 &&
+          Number(event.endTime.split(":")[1]) > 0) || Number(event.endTime.split(":")[0]) > 12
         ) {
-          generateDangerAlert("Program should end by 12:00 PM");
-          return;
-        }
-        if (Number(event.endTime.split(":")[0]) > 12) {
           generateDangerAlert("Program should end by 12:00 PM");
           return;
         }
@@ -307,6 +303,17 @@ export default function Form({ formType, eventData }) {
           generateDangerAlert("Program should start from atleast 1:00 PM");
           return;
         }
+
+        if (
+          (Number(event.endTime.split(":")[0]) === 16 &&
+          Number(event.endTime.split(":")[1]) > 0)
+           || 
+          Number(event.endTime.split(":")[0]) > 16
+        ) {
+          generateDangerAlert("Program should end by 04:00 PM");
+          return;
+        }
+
         break;
 
       case "EVNG":

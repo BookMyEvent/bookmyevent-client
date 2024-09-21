@@ -51,11 +51,15 @@
 }
 
 .each-event-event-name {
+    white-space: nowrap; 
+    width: 75%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
     padding: 5%;
     margin: 0%;
     padding-bottom: 7%;
     text-align: center;
-    overflow: hidden;
+
 }
 
 .each-event-view-event-details {

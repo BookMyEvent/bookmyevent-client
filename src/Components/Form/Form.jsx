@@ -35,8 +35,7 @@ export default function Form({ formType, eventData }) {
   });
 
   // Disable/Enable input fields
-    const [disable, setDisable] = useState(formType === "Edit" ? false : true);
-
+  const [disable, setDisable] = useState(formType === "Edit" ? false : true);
 
   // const venues = [
   //   "CHOOSE A VENUE---",
@@ -292,7 +291,8 @@ export default function Form({ formType, eventData }) {
       case "FN":
         if (
           (Number(event.endTime.split(":")[0]) === 12 &&
-          Number(event.endTime.split(":")[1]) > 0) || Number(event.endTime.split(":")[0]) > 12
+            Number(event.endTime.split(":")[1]) > 0) ||
+          Number(event.endTime.split(":")[0]) > 12
         ) {
           generateDangerAlert("Program should end by 12:00 PM");
           return;
@@ -306,8 +306,7 @@ export default function Form({ formType, eventData }) {
 
         if (
           (Number(event.endTime.split(":")[0]) === 16 &&
-          Number(event.endTime.split(":")[1]) > 0)
-           || 
+            Number(event.endTime.split(":")[1]) > 0) ||
           Number(event.endTime.split(":")[0]) > 16
         ) {
           generateDangerAlert("Program should end by 04:00 PM");
@@ -375,6 +374,8 @@ export default function Form({ formType, eventData }) {
     );
 
     // Compress the image and upload it to firebase and store the generated url
+    setLoading(true);
+
     const img = await handleImage();
 
     event.startTime = start;
@@ -384,41 +385,49 @@ export default function Form({ formType, eventData }) {
     event.target_audience = allowed_department;
 
     if (img != "false") {
-      setLoading(true);
-
-      if(formType === "Create"){
-      const res = await fetch("https://bookmyeventserver.vercel.app/api/addEvent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          club: user.type != "HOD" && user.name,
-          department: user.type != "General Club" && user.dept,
-          email: user.email,
-          ...event,
-        }),
-      });
-      const { status } = await res.json();
-      if (status === "Success") navigate("/");
-      else {
-        setLoading(false);
-        generateDangerAlert(status);
+      if (formType === "Create") {
+        const res = await fetch(
+          "https://bookmyeventserver.vercel.app/api/addEvent",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              club: user.type != "HOD" && user.name,
+              department: user.type != "General Club" && user.dept,
+              email: user.email,
+              ...event,
+            }),
+          }
+        );
+        const { status } = await res.json();
+        if (status === "Success") navigate("/");
+        else {
+          setLoading(false);
+          generateDangerAlert(status);
+        }
+      } else {
+        const res = await fetch(
+          "https://bookmyeventserver.vercel.app/api/updateEvent",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ event }),
+          }
+        );
+        const { status } = await res.json();
+        if (status === "Success") navigate("/view-profile");
+        else {
+          setLoading(false);
+          generateDangerAlert(status);
+        }
       }
     }
     else{
-      const res = await fetch(
-        "https://bookmyeventserver.vercel.app/api/updateEvent",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ event }),
-        }
-      );
-      const { status } = await res.json();
-      if (status === "Success") navigate("/view-profile");
-      else generateDangerAlert(status);
-    }
+      setLoading(false);
+      generateDangerAlert("Check your Image format")
     }
   }
+  
 
   // Firebase Upload
   async function uploadImage(image) {
@@ -438,9 +447,8 @@ export default function Form({ formType, eventData }) {
 
   // Compress the Image and then upload to Firebase
   async function handleImage() {
-    if (event.image != undefined ) {
-      if(typeof(event.image) === "string")
-        return event.image;
+    if (event.image != undefined) {
+      if (typeof event.image === "string") return event.image;
       if (event.image.type.startsWith("image/")) {
         try {
           // Compress Image
@@ -453,7 +461,7 @@ export default function Form({ formType, eventData }) {
             new File([compressedFile], "file", { type: "image/jpeg" })
           );
         } catch (error) {
-           ("Error compressing image:", error);
+          "Error compressing image:", error;
         }
       } else {
         generateDangerAlert("Upload an image format file only");
@@ -488,23 +496,18 @@ export default function Form({ formType, eventData }) {
   }
 
   useEffect(() => {
-    if (!user.isAuth) 
-      navigate("/");
-    else if(formType === "Create")
-      fetchDept();
+    if (!user.isAuth) navigate("/");
+    else if (formType === "Create") fetchDept();
   }, []);
 
   useEffect(() => {
-    if(loading === true && formType === "Edit")
-      setLoading(false);
-    else
-      setEvent({ ...event, venue: "CHOOSE A VENUE---" });
+    if (loading === true && formType === "Edit") setLoading(false);
+    else setEvent({ ...event, venue: "CHOOSE A VENUE---" });
   }, [event.date, event.session]);
 
   if (loading) {
     return <Loading />;
   }
-
 
   return (
     <div className="form-container">
@@ -727,9 +730,7 @@ export default function Form({ formType, eventData }) {
                 className="form-control"
                 type="time"
                 disabled={disable}
-                value={
-                  event.startTime
-                }
+                value={event.startTime}
                 onChange={(evt) => {
                   setEvent({ ...event, startTime: evt.target.value });
                 }}
@@ -744,9 +745,7 @@ export default function Form({ formType, eventData }) {
                 type="time"
                 disabled={disable}
                 placeholder="hh:mm"
-                value={
-                  event.endTime
-                }
+                value={event.endTime}
                 onChange={(evt) => {
                   setEvent({ ...event, endTime: evt.target.value });
                 }}

@@ -378,6 +378,7 @@ export default function Form({ formType, eventData }) {
 
     const img = await handleImage();
 
+    event.date = event_date;
     event.startTime = start;
     event.endTime = end;
     event.image = img;
@@ -386,6 +387,8 @@ export default function Form({ formType, eventData }) {
 
     if (img != "false") {
       if (formType === "Create") {
+        console.log(event);
+        
         const res = await fetch(
           "https://bookmyeventserver.vercel.app/api/addEvent",
           {

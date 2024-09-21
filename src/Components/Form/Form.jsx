@@ -387,7 +387,6 @@ export default function Form({ formType, eventData }) {
 
     if (img != "false") {
       if (formType === "Create") {
-        console.log(event);
         
         const res = await fetch(
           "https://bookmyeventserver.vercel.app/api/addEvent",

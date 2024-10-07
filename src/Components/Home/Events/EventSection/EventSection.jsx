@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import EachEvent from "../EachEvent/EachEvent";
 import "./eventSection.css";
+import { BASE_URL } from "../../../../constants";
 
 function EventSection({ eventData, name }) {
   // Sorting the events
@@ -82,7 +83,7 @@ function EventSection({ eventData, name }) {
     //Target Audience
     else {
       // Fetch All the departments from server
-      const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");
+      const res = await fetch(`${BASE_URL}/api/dept`);
       const { dept } = await res.json();
 
       let target_audience_wise = {};

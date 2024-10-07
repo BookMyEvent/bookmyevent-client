@@ -202,6 +202,79 @@
     left: 5%;
 }
 
+/* Chatbot Integration */
+.chatbot-mail-section{
+    width: 90%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 4%;
+}
+
+.chatbot-mail-section input{
+    width: 10%;
+    height: 25px;
+}
+
+.chatbot-mail-section p{
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.mail-id-groups{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 4%;
+    margin: 1% 0 1% 0;
+}
+
+.year-section{
+    width: 100%;
+}
+
+.year-section-header{
+    display: flex;
+    align-items: center;
+}
+
+.year-section-header input{
+    width: 10%;
+    height: 20px;
+}
+
+.year-section-header p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.year-section-sub-mails{
+    height: 92%;
+
+}
+
+.dept-mail{
+    height: 7%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 4%;
+    margin: 1%;
+}
+
+.dept-mail input{
+    width: 10%;
+    height: 20px;
+}
+
+.dept-mail p{
+    margin: 0;
+}
+
 .form-body::-webkit-scrollbar {
     width: 10px;
     border-radius: 0;
@@ -218,6 +291,45 @@
 
 .form::-webkit-scrollbar {
     display: none;
+}
+
+.attachments{
+    width: 90%;
+    height: 10%;
+    position: relative;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1%;
+}
+
+.attachments h6{
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: black;
+}
+.mail-attachment{
+    height: 60%;
+    margin-top: 1%;
+}
+
+.note{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 5%;   
+}
+
+.note h5{
+    color: red;
+}
+
+.note h6{
+    text-indent: 2%;
+    color: red;
 }
 
 @media (max-width:769px) {
@@ -323,5 +435,12 @@
 
     .time-group-input>* {
         height: 50%;
+    }
+    
+    .attachments{
+        height: 15%;
+    }
+    .attachments h6{
+        font-size: 90%;
     }
 }

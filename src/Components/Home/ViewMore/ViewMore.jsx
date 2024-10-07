@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { resetView } from '../../../slice/viewSlice';
+import { BASE_URL } from "../../../constants";
 
 import './viewmore.css';
 
@@ -14,7 +15,7 @@ export default function ViewMore() {
     const dispatch = useDispatch();
 
     async function fetchEvent() {
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/retrieveEvent", {
+        const res = await fetch(`${BASE_URL}/api/retrieveEvent`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ _id })

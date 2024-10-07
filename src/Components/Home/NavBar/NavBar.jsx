@@ -10,6 +10,7 @@ import iqac from "../../../Assets/IQAC.png";
 import bme from "../../../Assets/bookmyevent.png";
 import Loading from "../../Loading/Loading";
 import CountUp from "react-countup";
+import { BASE_URL } from "../../../constants";
 import "./navbar.css";
 
 export default function NavBar() {
@@ -36,7 +37,7 @@ export default function NavBar() {
   useEffect(() => {
     async function getData() {
       const data = await fetch(
-        "https://bookmyeventserver.vercel.app/api/eventhistory"
+        `${BASE_URL}/api/eventhistory`
       );
       const res = await data.json();
       setEventCount(res);

@@ -3,6 +3,7 @@ import { setView } from "../../../../slice/viewSlice";
 import "./eachEvent.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { BASE_URL } from "../../../../constants";
 
 export default function EachEvent({
   _id,
@@ -23,7 +24,7 @@ export default function EachEvent({
   // Only for Profile->Events Section (Delete an Event)
   async function deleteEvent() {
     const res = await fetch(
-      "https://bookmyeventserver.vercel.app/api/deleteEvent",
+      `${BASE_URL}/api/deleteEvent`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

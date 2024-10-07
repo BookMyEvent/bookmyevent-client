@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import Form from "../Form/Form";
 import "../Form/form.css";
+import { BASE_URL } from "../../constants";
 
 function EditEvent() {
   const user = useSelector((store) => store.user);
@@ -16,7 +17,7 @@ function EditEvent() {
   async function fetchEvents() {
     // Fetch the event details from server
     const res = await fetch(
-      "https://bookmyeventserver.vercel.app/api/retrieveEvent",
+      `${BASE_URL}/api/retrieveEvent`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -63,7 +64,7 @@ function EditEvent() {
   async function fetchDept(event) {
 
     // Fetch All the department from Server
-    const res = await fetch("https://bookmyeventserver.vercel.app/api/dept");
+    const res = await fetch(`${BASE_URL}/api/dept`);
     const { dept } = await res.json();
 
     // Initialize Target Audience Object

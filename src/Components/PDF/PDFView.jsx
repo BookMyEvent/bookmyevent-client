@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer";
+import { BASE_URL } from "../../constants";
 import "./pdfview.css";
 
 function PDFView() {
@@ -15,7 +16,7 @@ function PDFView() {
     const [loading, setLoading] = useState(true);
 
     async function fetchEvents() {
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/allEvents");
+        const res = await fetch(`${BASE_URL}/api/allEvents`);
         const { event } = await res.json();
         setLoading(false)
         setEvents(event);

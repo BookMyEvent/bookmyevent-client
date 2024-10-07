@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../auth/firebase';
 import { signout } from '../../../slice/userDetails';
 import { signOut } from 'firebase/auth';
+import { BASE_URL } from '../../../constants';
 import './profile.css';
 function Profile() {
     const user = useSelector(store => store.user);
@@ -43,7 +44,7 @@ function Profile() {
             })
             return;
         }
-        const res = await fetch('https://bookmyeventserver.vercel.app/api/updatePassword', {
+        const res = await fetch(`${BASE_URL}/api/updatePassword`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

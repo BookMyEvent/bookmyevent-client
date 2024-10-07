@@ -5,6 +5,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { auth } from "../../auth/firebase";
 import { signedin } from "../../slice/userDetails";
 import Loading from "../Loading/Loading";
+import { BASE_URL } from "../../constants";
 import "./signup.css";
 
 export default function SignUp() {
@@ -56,7 +57,7 @@ export default function SignUp() {
     async function createUser() {
         let res = undefined;
         if (type === 'General Club')
-            res = await fetch("https://bookmyeventserver.vercel.app/api/createUser", {
+            res = await fetch(`${BASE_URL}/api/createUser`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -64,7 +65,7 @@ export default function SignUp() {
                 })
             });
         else if (type === "Department Club" || type === "Admin")
-            res = await fetch("https://bookmyeventserver.vercel.app/api/createUser", {
+            res = await fetch(`${BASE_URL}/api/createUser`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -72,7 +73,7 @@ export default function SignUp() {
                 })
             });
         else
-            res = await fetch("https://bookmyeventserver.vercel.app/api/createUser", {
+            res = await fetch(`${BASE_URL}/api/createUser`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -96,7 +97,7 @@ export default function SignUp() {
 
     useEffect(() => {
         async function fetchDept() {
-            const res = await fetch("https://bookmyeventserver.vercel.app/api/allDept");
+            const res = await fetch(`${BASE_URL}/api/allDept`);
             let { dept } = await res.json();
             let temp = { '--CHOOSE THE DEPARTMENT--': false };
             dept.sort((a, b) => {

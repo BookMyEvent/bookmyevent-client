@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Loading from '../../Loading/Loading';
 import './events.css'
 import EventSection from "./EventSection/EventSection";
+import { BASE_URL } from "../../../constants";
 
 export default function Events() {
 
@@ -12,7 +13,7 @@ export default function Events() {
     // Fetch all upcoming events
     async function fetchEvents() {
         // Fetch the event list from server
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/getEvents");
+        const res = await fetch(`${BASE_URL}/api/getEvents`);
         const events = await res.json();
         // Sort it by date by default
         events.sort((a, b) => {

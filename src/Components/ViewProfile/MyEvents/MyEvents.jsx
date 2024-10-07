@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setView } from "../../../slice/viewSlice";
 import EachEvent from "../../Home/Events/EachEvent/EachEvent";
 import Loading from "../../Loading/Loading";
+import { BASE_URL } from "../../../constants";
 import "./myevents.css";
 
 function MyEvents() {
@@ -18,7 +19,7 @@ function MyEvents() {
 
     // For Club Users
     if (user.type != "HOD")
-      res = await fetch("https://bookmyeventserver.vercel.app/api/userevents", {
+      res = await fetch(`${BASE_URL}/api/userevents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -27,7 +28,7 @@ function MyEvents() {
       });
     // For HOD's
     else
-      res = await fetch("https://bookmyeventserver.vercel.app/api/userevents", {
+      res = await fetch(`${BASE_URL}/api/userevents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -5,6 +5,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { auth } from "../../auth/firebase";
 import { signedin } from "../../slice/userDetails";
 import Loading from '../Loading/Loading';
+import { BASE_URL } from "../../constants";
 import "./login.css";
 
 export default function Login() {
@@ -18,7 +19,7 @@ export default function Login() {
 
 
     async function fetchUser(uid) {
-        const res = await fetch("https://bookmyeventserver.vercel.app/api/findUser", {
+        const res = await fetch(`${BASE_URL}/api/findUser`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ uid })

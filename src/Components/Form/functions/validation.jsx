@@ -288,6 +288,16 @@ async function validateData(
     return;
   }
 
+
+  // Check for automated mail
+  if(mail.flag){
+    if(mail.mail_id.length == 0){
+      generateDangerAlert("Choose the mail id group", setAlert, formBody);
+      return;
+    }
+  }
+
+
   let event_date = new Date(event.date);
   // Generate Start and End Time in the format YYYY-MM-DDTHH:MM:SS.
   let start = new Date(
@@ -369,7 +379,9 @@ async function createEvent(
   });
   const { status } = await res.json();
   if (status === "Success") {
-    await sendMail(event, mail, user);
+    if(mail.flag){
+      await sendMail(event, mail, user);
+    }
     navigate("/");
   } else {
     setLoading(false);

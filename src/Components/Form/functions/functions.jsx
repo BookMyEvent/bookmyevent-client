@@ -36,11 +36,17 @@ function checkDate(
 // To Fetch Today Date and Time
 async function fetchTodayDate(setTodayDate) {
   // API Call to get accurate IST
+  try{
+
   const res = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
   const data = await res.json();
 
   // Date Format ->  YYYY-MM-DD
   setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));
+  }
+  catch(e){
+    setTodayDate(new Date().toISOString().slice(0, 10));
+  }
 }
 
 // Invokes when error occurs

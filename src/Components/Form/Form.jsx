@@ -41,21 +41,12 @@ export default function Form({ formType, eventData }) {
   // Disable/Enable input fields
   const [disable, setDisable] = useState(formType === "Edit" ? false : true);
 
-  // const venues = [
-  //   "CHOOSE A VENUE---",
-  //   "MULTI PURPOSE HALL",
-  //   "FUNCTION HALL",
-  //   "VIDEO HALL",
-  //   "LIBRARY SEMINAR HALL",
-  //   "BIO TECH SEMINAR HALL",
-  //   "LIBRARY CONFERENCE HALL",
-  //   "OTHERS**",
-  // ];
-
   // List of Venues
-
   const venues = [
     "CHOOSE A VENUE---",
+    // "MULTI PURPOSE HALL",
+    "FUNCTION HALL",
+    "VIDEO HALL",
     "LIBRARY SEMINAR HALL",
     "BIO TECH SEMINAR HALL",
     "LIBRARY CONFERENCE HALL",

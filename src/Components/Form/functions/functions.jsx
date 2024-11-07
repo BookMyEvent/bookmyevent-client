@@ -1,50 +1,26 @@
 import { BASE_URL, CHATBOT_BASE_URL } from "../../../constants";
 
 // Invokes when date/session field changes
-function checkDate(
-  evt,
-  event,
-  setEvent,
-  setAlert,
-  setDisable,
-  formType,
-  setBlock
-) {
+function checkDate(evt, event, setEvent, setAlert, setDisable, formType, setBlock) {
   if (evt.target.type === "date") {
     setEvent({ ...event, date: evt.target.value });
-    fetchBlockDates(
-      evt.target.value,
-      event.session,
-      setAlert,
-      setDisable,
-      formType,
-      setBlock
-    );
+    fetchBlockDates(evt.target.value, event.session, setAlert, setDisable, formType, setBlock);
   } else {
     setEvent({ ...event, session: evt.target.value });
-    fetchBlockDates(
-      event.date,
-      evt.target.value,
-      setAlert,
-      setDisable,
-      formType,
-      setBlock
-    );
+    fetchBlockDates(event.date, evt.target.value, setAlert, setDisable, formType, setBlock);
   }
 }
 
 // To Fetch Today Date and Time
 async function fetchTodayDate(setTodayDate) {
   // API Call to get accurate IST
-  try{
+  try {
+    const res = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    const data = await res.json();
 
-  const res = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
-  const data = await res.json();
-
-  // Date Format ->  YYYY-MM-DD
-  setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));
-  }
-  catch(e){
+    // Date Format ->  YYYY-MM-DD
+    setTodayDate(new Date(data["datetime"]).toISOString().slice(0, 10));
+  } catch (e) {
     setTodayDate(new Date().toISOString().slice(0, 10));
   }
 }
@@ -59,14 +35,7 @@ function generateDangerAlert(info, setAlert, formBody) {
 }
 
 // Fetch the Blocked Venues for Given Date & Session
-async function fetchBlockDates(
-  date,
-  session,
-  setAlert,
-  setDisable,
-  formType,
-  setBlock
-) {
+async function fetchBlockDates(date, session, setAlert, setDisable, formType, setBlock) {
   if (date != "" && session != "") {
     // Temporarily disable all the input fields till the blocked venues is fetched
     setDisable(true);
@@ -98,9 +67,7 @@ async function fetchBlockDates(
 
     // Exclude the booked venue from Block list
     if (formType === "Edit") {
-      blocked_venue_with_id = blocked_venue_with_id.filter(
-        (item) => event._id != item[0]
-      );
+      blocked_venue_with_id = blocked_venue_with_id.filter((item) => event._id != item[0]);
     }
 
     blocked_venues = blocked_venue_with_id.map((item) => item[1]);
@@ -145,8 +112,4 @@ async function fetchDept(event, setTodayDate, setEvent, setLoading) {
   setLoading(false);
 }
 
-export {
-  generateDangerAlert,
-  checkDate,
-  fetchDept,
-};
+export { generateDangerAlert, checkDate, fetchDept };

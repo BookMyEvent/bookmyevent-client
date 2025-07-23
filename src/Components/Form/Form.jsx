@@ -48,7 +48,7 @@ export default function Form({ formType, eventData }) {
     "FUNCTION HALL",
     "VIDEO HALL",
     "LIBRARY SEMINAR HALL",
-    // "BIO TECH SEMINAR HALL",
+    "BIO TECH SEMINAR HALL",
     "LIBRARY CONFERENCE HALL",
     "OTHERS**",
   ];

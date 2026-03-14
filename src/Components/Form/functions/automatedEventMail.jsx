@@ -1,6 +1,4 @@
-import { storage } from "../../../auth/firebase";
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { CHATBOT_BASE_URL } from "../../../constants";
+import { CHATBOT_BASE_URL, BASE_URL } from "../../../constants";
 
 // Send Mail to Students
 async function sendMail(event, mail, user) {
@@ -30,30 +28,34 @@ async function sendMail(event, mail, user) {
   return;
 }
 
-// Firebase Upload
+// Cloudinary Upload via Server
 async function uploadAttachments(event, user, files) {
   let attachments = [];
   files = Array.from(files);
-  let index = 0;
   for (let file of files) {
-    index++;
-    const storageRef = ref(
-      storage,
-      `mail/${event.event}_${user.dept}_${event.date.toString()}_${index}`
-    );
-    await uploadBytes(storageRef, file);
-    const res = await getDownloadURL(
-      ref(
-        storage,
-        `mail/${event.event}_${user.dept}_${event.date.toString()}_${index}`
-      )
-    );
-    attachments.push({
-      filename: file.name,
-      path: res,
-    });
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const uploadRes = await fetch(`${BASE_URL}/api/uploadImage`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (uploadRes.ok) {
+        const data = await uploadRes.json();
+        attachments.push({
+          filename: file.name,
+          path: data.url,
+        });
+      } else {
+        console.error("Failed to upload attachment:", file.name);
+      }
+    } catch (err) {
+      console.error("Network error uploading attachment:", err);
+    }
   }
   return attachments;
 }
 
-export {sendMail,uploadAttachments}
+export { sendMail, uploadAttachments }

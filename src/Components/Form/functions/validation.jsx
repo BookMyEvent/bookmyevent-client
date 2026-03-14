@@ -1,6 +1,4 @@
 import { generateDangerAlert } from "./functions.jsx";
-import { storage } from "../../../auth/firebase";
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { compress } from "image-conversion";
 import { BASE_URL } from "../../../constants";
 import { sendMail } from "./automatedEventMail.jsx";
@@ -258,7 +256,7 @@ async function validateData(
 
   if (
     Number(event.startTime.split(":")[0]) ===
-      Number(event.endTime.split(":")[0]) &&
+    Number(event.endTime.split(":")[0]) &&
     Number(event.startTime.split(":")[1]) > Number(event.endTime.split(":")[1])
   ) {
     generateDangerAlert("Invalid Program Timings", setAlert, formBody);
@@ -290,8 +288,8 @@ async function validateData(
 
 
   // Check for automated mail
-  if(mail.flag){
-    if(mail.mail_id.length == 0){
+  if (mail.flag) {
+    if (mail.mail_id.length == 0) {
       generateDangerAlert("Choose the mail id group", setAlert, formBody);
       return;
     }
@@ -379,7 +377,7 @@ async function createEvent(
   });
   const { status } = await res.json();
   if (status === "Success") {
-    if(mail.flag){
+    if (mail.flag) {
       await sendMail(event, mail, user);
     }
     navigate("/");
@@ -445,17 +443,27 @@ async function handleImage(event, user, setAlert, formBody) {
   }
 }
 
-// Firebase Upload
+// Cloudinary Upload via Server
 async function uploadImage(event, user, image) {
-  const storageRef = ref(
-    storage,
-    `posters/${event.event}_${user.dept}_${event.date.toString()}`
-  );
-  await uploadBytes(storageRef, image);
-  const res = await getDownloadURL(
-    ref(storage, `posters/${event.event}_${user.dept}_${event.date.toString()}`)
-  );
-  return res;
+  const formData = new FormData();
+  formData.append("image", image, `poster_${new Date().getTime()}.jpg`);
+
+  try {
+    const res = await fetch(`${BASE_URL}/api/uploadImage`, {
+      method: "POST",
+      body: formData,
+    });
+    
+    if (!res.ok) {
+      throw new Error("Failed to upload image.");
+    }
+
+    const data = await res.json();
+    return data.url;
+  } catch (error) {
+    console.error("Upload error:", error);
+    return "false";
+  }
 }
 
 export { validateData };

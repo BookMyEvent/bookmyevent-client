@@ -51,7 +51,7 @@ export default function Form({ formType, eventData }) {
     "Function hall, 3rd floor, central library",
     //"BIO TECH SEMINAR HALL",
     "LIBRARY CONFERENCE HALL",
-    "OTHERS**",
+    //"OTHERS**",
   ];
 
   // Sessions

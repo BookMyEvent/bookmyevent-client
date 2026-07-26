@@ -1,23 +1,20 @@
 import React from 'react';
-import BioTech1 from "../../../Assets/Bio Tech Seminar Hall (1).jpg"
-import BioTech2 from "../../../Assets/Bio Tech Seminar Hall (2).jpg"
-import BioTech3 from "../../../Assets/Bio Tech Seminar Hall (3).jpg"
-import LibraryHall1 from "../../../Assets/Library Seminar Hall (1).jpg"
-import LibraryHall2 from "../../../Assets/Library Seminar Hall (2).jpg"
-import LibraryHall3 from "../../../Assets/Library Seminar Hall (3).jpg"
-import mph from "../../../Assets/MPH.jpeg";
-import FunctionHall from "../../../Assets/Function Hall.jpeg";
-import FunctionHall2 from "../../../Assets/Function Hall(1).jpg";
-import FunctionHall3 from "../../../Assets/Function Hall(2).jpg";
-import VideoHall from "../../../Assets/Video Hall.jpg";
-import VideoHall1 from "../../../Assets/Video Hall (2).jpg";
-import ConferenceHall1 from '../../../Assets/Conference Hall (1).jpeg';
-import ConferenceHall2 from '../../../Assets/Conference Hall (2).jpeg';
-import ConferenceHall3 from '../../../Assets/Conference Hall (3).jpeg';
-import ConferenceHall4 from '../../../Assets/Conference Hall (4).jpeg';
-
-
 import './venue.css';
+
+const CLOUDINARY = {
+  mph: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054572/venue/pm2tohaozdtlquudawtm.jpg",
+  libraryFunctionHall: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054574/venue/rudhpjmrrzfhzeovkabk.jpg",
+  librarySeminarHall1: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054578/venue/ctszxnbb1r31n08scibx.jpg",
+  librarySeminarHall2: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054582/venue/tzheps5z2bhyhjrcer2e.jpg",
+  librarySeminarHall3: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054585/venue/p3wnxomqv8ool0crjvmx.jpg",
+  bioTech1: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054588/venue/k4fclszedluac2ncvyio.jpg",
+  bioTech2: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054592/venue/yy0lmu6ho6m7cuwvtdfk.jpg",
+  bioTech3: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054596/venue/gkro9djrbd0k1jcjgmrz.jpg",
+  conferenceHall1: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054598/venue/dclqbu0z8x1wurkykulf.jpg",
+  conferenceHall2: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054599/venue/uo7gbjiik2k1allcmnuw.jpg",
+  conferenceHall3: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054601/venue/rjjvymqhwgav3haehyjj.jpg",
+  conferenceHall4: "https://res.cloudinary.com/drlcxzy2i/image/upload/v1785054602/venue/iu1ijtlrql7ui2fi3cx5.jpg",
+};
 
 function Venue() {
   return (
@@ -46,13 +43,13 @@ function Venue() {
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="https://lh3.googleusercontent.com/p/AF1QipPW16MIs48OHB-7-5FuIMlx6lawJbyjDIzsnl-g=s1360-w1360-h1020" class="d-block w-100" alt="..." />
+                <img src="https://lh3.googleusercontent.com/p/AF1QipPW16MIs48OHB-7-5FuIMlx6lawJbyjDIzsnl-g=s1360-w1360-h1020" class="d-block w-100" alt="MPH" />
               </div>
               <div class="carousel-item">
-                <img src="https://lh3.googleusercontent.com/p/AF1QipNwpNID44wqvsyvliv2dUWoHjairwDIFoyBlizp=s1360-w1360-h1020" class="d-block w-100" alt="..." />
+                <img src="https://lh3.googleusercontent.com/p/AF1QipNwpNID44wqvsyvliv2dUWoHjairwDIFoyBlizp=s1360-w1360-h1020" class="d-block w-100" alt="MPH" />
               </div>
               <div class="carousel-item">
-                <img src={mph} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.mph} class="d-block w-100" alt="MPH" />
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -67,13 +64,13 @@ function Venue() {
         </div>
       </div>
 
-      {/* Function Hall */}
+      {/* Library Function Hall */}
       <div className="card card-venue">
         <div className='venue-content'>
-          <h4 className='venue-title'>FUNCTION HALL</h4>
+          <h4 className='venue-title'>LIBRARY FUNCTION HALL</h4>
           <p className='venue-desc'>
-            The Function hall is a dedicated space within an institution designed for presentations, other activities like hackathon and so on.
-            Function hall serves as a valuable resource for various purposes, including:
+            The Library Function Hall is a dedicated space within an institution designed for presentations, other activities like hackathon and so on.
+            Library Function Hall serves as a valuable resource for various purposes, including:
             <b className='venue-title'> Academic Instruction,Presentations and Seminars,Webinars and Online Learning.</b>
           </p>
           <h5 className='venue-title'>Seating Capacity - 240</h5>
@@ -92,13 +89,7 @@ function Venue() {
           <div id="carouselExampleIndicators1" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src={FunctionHall} class="d-block w-100" alt="..." />
-              </div>
-              <div class="carousel-item">
-                <img src={FunctionHall2} class="d-block w-100" alt="..." />
-              </div>
-              <div class="carousel-item">
-                <img src={FunctionHall3} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.libraryFunctionHall} class="d-block w-100" alt="Library Function Hall" />
               </div>
             </div>
 
@@ -115,49 +106,7 @@ function Venue() {
         </div>
       </div>
 
-      {/* Video Hall */}
-      <div className="card card-venue">
-        <div className='venue-content'>
-          <h4 className='venue-title'>VIDEO HALL</h4>
-          <p className='venue-desc'>
-            The Video hall is a dedicated space within an institution designed for presentations, other activities like hackathon and so on.
-            Video hall serves as a valuable resource for various purposes, including:
-            <b className='venue-title'> Academic Instruction,Presentations and Seminars,Webinars and Online Learning.</b>
-          </p>
-          <h5 className='venue-title'>Seating Capacity - 120</h5>
-          <h4 className='venue-title'>Resources Available</h4>
-          <ul className='specs'>
-            <li className='points'>LCD PROJECTOR - SCREEN SIZE 8" x 6"</li>
-            <li className='points'>WIRELESS MIC</li>
-            <li className='points'>PODIUM WITH MIC</li>
-            <li className='points'>COLLAR MIC</li>
-            <li className='points'>SOUND SYSTEM</li>
-            <li className='points'>AIR CONDITIONER</li>
-            <li className='points'>LAPTOP</li>
-          </ul>
-        </div>
 
-        <div className="venue-img">
-          <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="true">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src={VideoHall} class="d-block w-100" alt="..." />
-              </div>
-              <div class="carousel-item">
-                <img src={VideoHall1} class="d-block w-100" alt="..." />
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* Library Seminar Hall */}
       <div className="card card-venue">
@@ -186,13 +135,13 @@ function Venue() {
           <div id="carouselExampleIndicators3" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src={LibraryHall1} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.librarySeminarHall1} class="d-block w-100" alt="Library Seminar Hall" />
               </div>
               <div class="carousel-item">
-                <img src={LibraryHall2} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.librarySeminarHall2} class="d-block w-100" alt="Library Seminar Hall" />
               </div>
               <div class="carousel-item">
-                <img src={LibraryHall3} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.librarySeminarHall3} class="d-block w-100" alt="Library Seminar Hall" />
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="prev">
@@ -235,13 +184,13 @@ function Venue() {
           <div id="carouselExampleIndicators4" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src={BioTech1} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.bioTech1} class="d-block w-100" alt="Bio Tech Seminar Hall" />
               </div>
               <div class="carousel-item">
-                <img src={BioTech2} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.bioTech2} class="d-block w-100" alt="Bio Tech Seminar Hall" />
               </div>
               <div class="carousel-item">
-                <img src={BioTech3} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.bioTech3} class="d-block w-100" alt="Bio Tech Seminar Hall" />
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="prev">
@@ -284,16 +233,16 @@ function Venue() {
           <div id="carouselExampleIndicators5" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src={ConferenceHall1} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.conferenceHall1} class="d-block w-100" alt="Conference Hall" />
               </div>
               <div class="carousel-item">
-                <img src={ConferenceHall2} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.conferenceHall2} class="d-block w-100" alt="Conference Hall" />
               </div>
               <div class="carousel-item">
-                <img src={ConferenceHall3} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.conferenceHall3} class="d-block w-100" alt="Conference Hall" />
               </div>
               <div class="carousel-item">
-                <img src={ConferenceHall4} class="d-block w-100" alt="..." />
+                <img src={CLOUDINARY.conferenceHall4} class="d-block w-100" alt="Conference Hall" />
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators5" data-bs-slide="prev">

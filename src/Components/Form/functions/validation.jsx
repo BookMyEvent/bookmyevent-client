@@ -296,21 +296,19 @@ async function validateData(
   }
 
 
-  // Fix: manually split the date string to avoid JS parsing "YYYY-MM-DD" as UTC
-  // midnight, which shifts the date back by 1 day in IST (UTC+5:30).
-  const [year, month, day] = event.date.split("-").map(Number);
+  let event_date = new Date(event.date);
   // Generate Start and End Time in the format YYYY-MM-DDTHH:MM:SS.
   let start = new Date(
-    year,
-    month - 1,
-    day,
+    event_date.getFullYear(),
+    event_date.getMonth(),
+    event_date.getDate(),
     event.startTime.slice(0, 2),
     event.startTime.slice(3, 5)
   );
   let end = new Date(
-    year,
-    month - 1,
-    day,
+    event_date.getFullYear(),
+    event_date.getMonth(),
+    event_date.getDate(),
     event.endTime.slice(0, 2),
     event.endTime.slice(3, 5)
   );
@@ -321,7 +319,7 @@ async function validateData(
   const img = await handleImage(event, user, setAlert, formBody);
 
   //   Update the state values
-  event.date = new Date(year, month - 1, day);
+  event.date = event_date;
   event.startTime = start;
   event.endTime = end;
   event.image = img;
